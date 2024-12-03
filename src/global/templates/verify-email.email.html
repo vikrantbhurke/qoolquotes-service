@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div
+      style="
+        max-width: 600px;
+        margin: 30px auto;
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      ">
+      <h1 style="color: #222; text-align: center">Hey, {{name}}!</h1>
+      <p style="color: #222; line-height: 1.6; text-align: center">
+        Verify your new email by clicking the link below.
+      </p>
+      <div
+        style="
+          display: block;
+          width: 100%;
+          text-align: center;
+          margin-top: 20px;
+        ">
+        <a
+          href="{{clientUrl}}/users/verify-email/{{token}}"
+          style="
+            background-color: #3be8d4;
+            color: black;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+          "
+          >Verify New Email</a
+        >
+      </div>
+    </div>
+  </body>
+</html>
