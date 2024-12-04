@@ -1,10 +1,9 @@
 import { Order } from "../global/enums";
-import { PAGE_SIZE, RANDOM_PAGE_SIZE } from "../global/constants/constants";
+import { PAGE_SIZE } from "../global/constants/constants";
 
 export const getRandomQuotesConfig = {
   refs: ["authorId", "topicIds"],
   refFields: ["name", "name"],
-  PAGE_SIZE: RANDOM_PAGE_SIZE,
 };
 
 export const getQuotesByAuthorConfig = {

@@ -119,8 +119,8 @@ export class QuoteService {
     return await this.quoteRepository.countQuotesByTopicId(topicIdDTO);
   }
 
-  async getRandomQuotes() {
-    return await this.quoteRepository.getRandomQuotes();
+  async getRandomQuotes(pageSize: number) {
+    return await this.quoteRepository.getRandomQuotes(pageSize);
   }
 
   async searchQuotes(page: number, search: string) {

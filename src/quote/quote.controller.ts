@@ -70,9 +70,14 @@ export class QuoteController {
   }
 
   @Get("/random")
-  async getRandomQuotes(@Res() response: Response) {
+  async getRandomQuotes(
+    @QueryParams() { pageSize }: any,
+    @Res() response: Response
+  ) {
     try {
-      const quotesPage: Page = await this.quoteService.getRandomQuotes();
+      const quotesPage: Page = await this.quoteService.getRandomQuotes(
+        pageSize
+      );
 
       const quotesDTO: QuoteResponseDTO[] = quotesPage.content.map((quote) =>
         this.quoteUtility.convertQuoteToQuoteDTO(quote)

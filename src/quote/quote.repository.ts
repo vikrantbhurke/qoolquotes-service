@@ -37,7 +37,7 @@ export class QuoteRepository {
   }
 
   @getRandomModels(Quote, getRandomQuotesConfig)
-  async getRandomQuotes(quotesPage?: any) {
+  async getRandomQuotes(pageSize: number, quotesPage?: any) {
     return quotesPage;
   }
 

@@ -3,15 +3,16 @@ import { Model } from "mongoose";
 const getRandomModels =
   (Model: Model<any>, getRandomModelsConfig: any) =>
   (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
-    const { PAGE_SIZE, refs, refFields } = getRandomModelsConfig;
+    const { refs, refFields } = getRandomModelsConfig;
     const originalMethod = descriptor.value;
 
     descriptor.value = async (...args: any[]) => {
+      const pageSize = args[0];
       const totalElements = await Model.countDocuments().exec();
       const content = [];
 
-      for (let i = 0; i < PAGE_SIZE; i++) {
-        const randomOffset = Math.floor(Math.random() * PAGE_SIZE);
+      for (let i = 0; i < pageSize; i++) {
+        const randomOffset = Math.floor(Math.random() * pageSize);
         let query = Model.findOne().skip(randomOffset).lean();
 
         if (refs && refFields) {
@@ -24,13 +25,13 @@ const getRandomModels =
         if (document) content.push(document);
       }
 
-      const totalPages = Math.ceil(totalElements / PAGE_SIZE);
+      const totalPages = Math.ceil(totalElements / pageSize);
 
       const document = {
         content,
         totalElements,
         totalPages,
-        pageSize: PAGE_SIZE,
+        pageSize,
         page: 0,
         sort: null,
         firstPage: true,
