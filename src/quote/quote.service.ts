@@ -13,6 +13,7 @@ import {
   TopicIdDTO,
   UpdateQuoteDTO,
 } from "./dtos";
+// import quotesJson from "../../../data/quotes.json";
 
 export class QuoteService {
   quoteRepository: QuoteRepository;
@@ -56,60 +57,10 @@ export class QuoteService {
     this.deletionTracker = deletionTracker;
   }
 
-  async createQuotes(createQuotesDTO: CreateQuoteDTO[]) {
-    for (const createQuoteDTO of createQuotesDTO) {
-      const exists = await this.checkQuoteByContent({
-        content: createQuoteDTO.content,
-      });
-
-      if (exists) {
-        console.log(createQuoteDTO.content);
-        continue;
-      }
-
-      const quoteWithTopics =
-        this.quoteUtility.extractTopicsFromQuote(createQuoteDTO);
-
-      let quoteWithTopicIdsAndAuthorId: any = {
-        content: createQuoteDTO.content,
-        authorId: "",
-        topicIds: [],
-      };
-
-      for (const topicName of quoteWithTopics.topics) {
-        const existingTopic = await this.topicService.getTopicByName({
-          name: topicName,
-        });
-
-        if (existingTopic) {
-          quoteWithTopicIdsAndAuthorId.topicIds.push(existingTopic._id);
-          continue;
-        }
-
-        const newTopic = await this.topicService.createTopic({
-          name: topicName,
-        });
-        quoteWithTopicIdsAndAuthorId.topicIds.push(newTopic._id);
-      }
-
-      const existingAuthor = await this.authorService.getAuthorByName({
-        name: createQuoteDTO.author,
-      });
-
-      if (existingAuthor) {
-        quoteWithTopicIdsAndAuthorId.authorId = existingAuthor._id;
-        return await this.quoteRepository.createQuote(
-          quoteWithTopicIdsAndAuthorId
-        );
-      }
-
-      const newAuthor = await this.authorService.createAuthor({
-        name: createQuoteDTO.author,
-      });
-
-      quoteWithTopicIdsAndAuthorId.authorId = newAuthor._id;
-      await this.quoteRepository.createQuote(quoteWithTopicIdsAndAuthorId);
-    }
+  async createQuotes() {
+    // for (const createQuoteDTO of quotesJson) {
+    //   await this.createQuote(createQuoteDTO);
+    // }
   }
 
   async createQuote(createQuoteDTO: CreateQuoteDTO) {
@@ -118,6 +69,7 @@ export class QuoteService {
     });
 
     if (exists) throw new Error("Quote already exists in the database.");
+    // if (exists) console.log(createQuoteDTO);
 
     const quoteWithTopics =
       this.quoteUtility.extractTopicsFromQuote(createQuoteDTO);

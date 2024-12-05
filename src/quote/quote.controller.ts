@@ -36,13 +36,9 @@ export class QuoteController {
   }
 
   @Post("/bulk")
-  async createQuotes(
-    @Body({ validate: { whitelist: true, forbidNonWhitelisted: true } })
-    createQuotesDTO: CreateQuoteDTO[],
-    @Res() response: Response
-  ) {
+  async createQuotes(@Res() response: Response) {
     try {
-      await this.quoteService.createQuotes(createQuotesDTO);
+      await this.quoteService.createQuotes();
       return response.status(201).send({ message: "Quotes created." });
     } catch (error: any) {
       let message;
