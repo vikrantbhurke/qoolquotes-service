@@ -13,7 +13,7 @@ import {
   UpdateQuoteDTO,
   PlaylistIdDTO,
 } from "./dtos";
-import quotesJson from "../../../data/quotes.json";
+// import quotesJson from "../../../data/quotes.json";
 
 export class QuoteService {
   quoteRepository: QuoteRepository;
@@ -58,9 +58,9 @@ export class QuoteService {
   }
 
   async createQuotes() {
-    for (const createQuoteDTO of quotesJson) {
-      await this.createQuote(createQuoteDTO);
-    }
+    // for (const createQuoteDTO of quotesJson) {
+    //   await this.createQuote(createQuoteDTO);
+    // }
   }
 
   async createQuote(createQuoteDTO: CreateQuoteDTO) {
