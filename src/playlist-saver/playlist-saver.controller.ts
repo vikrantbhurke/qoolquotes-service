@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
-import { PlaylistSaverService, playlistSaverService } from "./index";
 import { Response } from "express";
+import { PlaylistSaverService, playlistSaverService } from "./index";
+import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
 
 @Controller("/playlists-savers")
 export class PlaylistSaverController {

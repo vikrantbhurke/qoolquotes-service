@@ -5,5 +5,4 @@ export default class QuoteResponseDTO {
   content: string;
   authorId: Schema.Types.ObjectId;
   topicIds: Schema.Types.ObjectId[];
-  likes: number;
 }

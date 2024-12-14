@@ -14,9 +14,9 @@ import {
   AuthorUtility,
   authorUtility,
 } from "./index";
-import { AuthorResponseDTO, GetAuthorsDTO, UpdateAuthorDTO } from "./dtos";
-import { Page } from "../global/types/page.type";
 import { Response } from "express";
+import { Page } from "../global/types/page.type";
+import { AuthorResponseDTO, GetAuthorsDTO, UpdateAuthorDTO } from "./dtos";
 
 @Controller("/authors")
 export class AuthorController {

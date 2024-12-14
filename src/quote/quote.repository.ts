@@ -1,24 +1,27 @@
 import {
   checkModel,
-  countModelsByField,
-  getModelByField,
   getModelById,
-  getModelsByField,
-  getRandomModels,
   searchModels,
+  getModelByField,
+  getRandomModels,
+  getModelsByField,
+  countModelsByField,
 } from "../global/decorators/read";
-import { createModel } from "../global/decorators/create";
-import Quote from "./quote.model";
 import {
-  getQuoteByIdConfig,
-  getQuotesByAuthorConfig,
-  getQuotesByTopicConfig,
-  getRandomQuotesConfig,
   searchQuotesConfig,
+  getQuoteByIdConfig,
+  getRandomQuotesConfig,
+  getQuotesByTopicConfig,
+  getQuotesByAuthorConfig,
 } from "./quote.config";
-import { updateModelById } from "../global/decorators/update";
+import {
+  updateModelById,
+  pullRefFromModelById,
+} from "../global/decorators/update";
+import Quote from "./quote.model";
+import { createModel } from "../global/decorators/create";
 import { deleteModelById } from "../global/decorators/delete";
-import { AuthorIdDTO, ContentDTO, TopicIdDTO } from "./dtos";
+import { AuthorIdDTO, ContentDTO, TopicIdDTO, UpdateQuoteDTO } from "./dtos";
 
 export class QuoteRepository {
   @createModel(Quote)
@@ -85,7 +88,16 @@ export class QuoteRepository {
   }
 
   @updateModelById(Quote)
-  async updateQuoteById(qid: string, updateQuoteDTO: any, quote?: any) {
+  async updateQuoteById(
+    qid: string,
+    updateQuoteDTO: UpdateQuoteDTO,
+    quote?: any
+  ) {
+    return quote;
+  }
+
+  @pullRefFromModelById(Quote, "topicIds")
+  async pullTopicIdFromQuoteById(qid: string, tid: string, quote?: any) {
     return quote;
   }
 

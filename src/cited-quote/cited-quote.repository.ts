@@ -1,6 +1,6 @@
-import { createModel } from "../global/decorators/create";
 import CitedQuote from "./cited-quote.model";
 import { CreateCitedQuoteDTO } from "./dtos";
+import { createModel } from "../global/decorators/create";
 
 export class CitedQuoteRepository {
   @createModel(CitedQuote)

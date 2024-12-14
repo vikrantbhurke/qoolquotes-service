@@ -1,17 +1,17 @@
+import { v2 as cloudinary } from "cloudinary";
 import { PlaylistService } from "../playlist";
 import { QuoteLikerService } from "../quote-liker";
 import { PlaylistSaverService } from "../playlist-saver";
 import { PlaylistLikerService } from "../playlist-liker";
+import { UserRepository } from "./user.repository";
+import { UserUtility } from "./user.utility";
+import { DeletionTracker } from "../global/utilities";
 import {
   SignInUserDTO,
   SignUpUserDTO,
   UpdateUserDTO,
   UsernameDTO,
 } from "./dtos";
-import { UserRepository } from "./user.repository";
-import { UserUtility } from "./user.utility";
-import { v2 as cloudinary } from "cloudinary";
-import { DeletionTracker } from "../global/utilities";
 
 export class UserService {
   userRepository: UserRepository;
@@ -163,12 +163,6 @@ export class UserService {
     return user;
   }
 
-  async updateUserEmailById(uid: string, email: string) {
-    const user = await this.userRepository.updateUserById(uid, { email });
-    if (!user) throw new Error("User not found.");
-    return user;
-  }
-
   async updateUserById(
     uid: string,
     updateUserByIdDTO: UpdateUserDTO,
@@ -217,6 +211,12 @@ export class UserService {
     }
 
     return await this.userRepository.updateUserById(uid, updatedUser);
+  }
+
+  async updateUserEmailById(uid: string, email: string) {
+    const user = await this.userRepository.updateUserById(uid, { email });
+    if (!user) throw new Error("User not found.");
+    return user;
   }
 
   async deleteProfilePicById(uid: string) {

@@ -7,5 +7,4 @@ export default class PlaylistResponseDTO {
   description: string;
   creatorId: Schema.Types.ObjectId;
   access: Access;
-  likes: number;
 }

@@ -18,9 +18,6 @@ export class Playlist extends Document {
   @prop({ enum: Access, required: true, default: Access.Public })
   access: Access;
 
-  @prop({ type: Number, default: 0 })
-  likes: number;
-
   @prop({ type: Boolean, default: false })
   isDeleted: boolean;
 }

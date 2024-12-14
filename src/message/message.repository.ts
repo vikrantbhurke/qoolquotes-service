@@ -1,6 +1,6 @@
-import { createModel } from "../global/decorators/create";
-import { CreateMessageDTO } from "./dtos";
 import Message from "./message.model";
+import { CreateMessageDTO } from "./dtos";
+import { createModel } from "../global/decorators/create";
 
 export class MessageRepository {
   @createModel(Message)

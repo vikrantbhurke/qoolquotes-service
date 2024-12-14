@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
-import { PlaylistLikerService, playlistLikerService } from "./index";
 import { Response } from "express";
+import { PlaylistLikerService, playlistLikerService } from "./index";
+import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
 
 @Controller("/playlists-likers")
 export class PlaylistLikerController {
@@ -10,7 +10,7 @@ export class PlaylistLikerController {
     this.playlistLikerService = playlistLikerService;
   }
 
-  @Post("/playlistId/:pid/likerId/:lid/like")
+  @Post("/playlistId/:pid/likerId/:lid")
   async likePlaylist(
     @Param("pid") pid: string,
     @Param("lid") lid: string,
@@ -28,7 +28,7 @@ export class PlaylistLikerController {
     }
   }
 
-  @Get("/:pid/likes")
+  @Get("/playlistId/:pid/likes")
   async countPlaylistLikes(
     @Param("pid") pid: string,
     @Res() response: Response
@@ -63,7 +63,7 @@ export class PlaylistLikerController {
     }
   }
 
-  @Delete("/playlistId/:pid/likerId/:lid/unlike")
+  @Delete("/playlistId/:pid/likerId/:lid")
   async unlikePlaylist(
     @Param("pid") pid: string,
     @Param("lid") lid: string,

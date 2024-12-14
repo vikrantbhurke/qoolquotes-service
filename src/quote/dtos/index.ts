@@ -7,6 +7,7 @@ import QuoteIdDTO from "./quote-id.dto";
 import ContentDTO from "./content.dto";
 import TopicIdDTO from "./topic-id.dto";
 import AuthorIdDTO from "./author-id.dto";
+import PlaylistIdDTO from "./playlist-id.dto";
 
 export {
   CreateQuoteDTO,
@@ -18,4 +19,5 @@ export {
   ContentDTO,
   TopicIdDTO,
   AuthorIdDTO,
+  PlaylistIdDTO,
 };

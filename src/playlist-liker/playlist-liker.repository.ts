@@ -1,8 +1,8 @@
-import PlaylistLiker from "./playlist-liker.model";
 import {
   deleteModelByField,
   deleteModelsByField,
 } from "../global/decorators/delete";
+import PlaylistLiker from "./playlist-liker.model";
 import { createModel } from "../global/decorators/create";
 import { LikerIdDTO, PlaylistIdLikerIdDTO, PlaylistIdDTO } from "./dtos";
 import { countModelsByField, checkModel } from "../global/decorators/read";
@@ -26,7 +26,7 @@ export class PlaylistLikerRepository {
 
   @countModelsByField(PlaylistLiker)
   async countPlaylistsLikersByPlaylistId(
-    quoteIdDTO: PlaylistIdDTO,
+    playlistIdDTO: PlaylistIdDTO,
     count?: number
   ) {
     return count;
@@ -44,7 +44,7 @@ export class PlaylistLikerRepository {
   async deletePlaylistsLikersByPlaylistId(playlistId: PlaylistIdDTO) {}
 
   @deleteModelsByField(PlaylistLiker)
-  async deletePlaylistsLikersByLikerId(playlistId: LikerIdDTO) {}
+  async deletePlaylistsLikersByLikerId(likerIdDTO: LikerIdDTO) {}
 }
 
 export const playlistLikerRepository = new PlaylistLikerRepository();

@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Res } from "routing-controllers";
-import { CitedQuoteService, citedQuoteService } from "./index";
-import { CreateCitedQuoteDTO } from "./dtos";
 import { Response } from "express";
+import { CreateCitedQuoteDTO } from "./dtos";
+import { CitedQuoteService, citedQuoteService } from "./index";
+import { Body, Controller, Post, Res } from "routing-controllers";
 
 @Controller("/cited-quotes")
 export class CitedQuoteController {

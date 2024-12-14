@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
-import { PlaylistQuoteService, playlistQuoteService } from "./index";
 import { Response } from "express";
+import { PlaylistQuoteService, playlistQuoteService } from "./index";
+import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
 
 @Controller("/playlists-quotes")
 export class PlaylistQuoteController {
@@ -10,7 +10,7 @@ export class PlaylistQuoteController {
     this.playlistQuoteService = playlistQuoteService;
   }
 
-  @Post("/playlistId/:pid/quoteId/:qid/add")
+  @Post("/playlistId/:pid/quoteId/:qid")
   async addQuoteToPlaylist(
     @Param("pid") pid: string,
     @Param("qid") qid: string,
@@ -28,7 +28,7 @@ export class PlaylistQuoteController {
     }
   }
 
-  @Get("/:pid/quotes")
+  @Get("/playlistId/:pid/quotes")
   async countPlaylistQuotes(
     @Param("pid") pid: string,
     @Res() response: Response
@@ -63,7 +63,7 @@ export class PlaylistQuoteController {
     }
   }
 
-  @Delete("/playlistId/:pid/quoteId/:qid/remove")
+  @Delete("/playlistId/:pid/quoteId/:qid")
   async removeQuoteFromPlaylist(
     @Param("pid") pid: string,
     @Param("qid") qid: string,

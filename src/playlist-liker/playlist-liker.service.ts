@@ -1,5 +1,5 @@
-import { PlaylistIdLikerIdDTO, LikerIdDTO, PlaylistIdDTO } from "./dtos";
 import { PlaylistLikerRepository } from "./index";
+import { PlaylistIdLikerIdDTO, LikerIdDTO, PlaylistIdDTO } from "./dtos";
 
 export class PlaylistLikerService {
   private playlistLikerRepository: PlaylistLikerRepository;
@@ -16,15 +16,15 @@ export class PlaylistLikerService {
     );
   }
 
-  async checkPlaylistLiker(playlistIdLikerIdDTO: PlaylistIdLikerIdDTO) {
-    return await this.playlistLikerRepository.checkPlaylistLiker(
-      playlistIdLikerIdDTO
-    );
-  }
-
   async countPlaylistsLikersByPlaylistId(playlistIdDTO: PlaylistIdDTO) {
     return await this.playlistLikerRepository.countPlaylistsLikersByPlaylistId(
       playlistIdDTO
+    );
+  }
+
+  async checkPlaylistLiker(playlistIdLikerIdDTO: PlaylistIdLikerIdDTO) {
+    return await this.playlistLikerRepository.checkPlaylistLiker(
+      playlistIdLikerIdDTO
     );
   }
 

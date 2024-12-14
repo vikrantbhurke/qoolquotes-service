@@ -1,19 +1,19 @@
-import { DeletionTracker } from "../global/utilities";
-import { AuthorService } from "../author";
 import { TopicService } from "../topic";
+import { AuthorService } from "../author";
+import { PlaylistService } from "../playlist";
+import { QuoteLikerService } from "../quote-liker";
+import { DeletionTracker } from "../global/utilities";
 import { QuoteRepository, QuoteUtility } from "./index";
 import { PlaylistQuoteService } from "../playlist-quote";
-import { QuoteLikerService } from "../quote-liker";
-import { PlaylistService } from "../playlist";
-import { PlaylistIdDTO } from "../playlist/dtos";
 import {
-  AuthorIdDTO,
   ContentDTO,
-  CreateQuoteDTO,
   TopicIdDTO,
+  AuthorIdDTO,
+  CreateQuoteDTO,
   UpdateQuoteDTO,
+  PlaylistIdDTO,
 } from "./dtos";
-// import quotesJson from "../../../data/quotes.json";
+import quotesJson from "../../../data/quotes.json";
 
 export class QuoteService {
   quoteRepository: QuoteRepository;
@@ -58,9 +58,9 @@ export class QuoteService {
   }
 
   async createQuotes() {
-    // for (const createQuoteDTO of quotesJson) {
-    //   await this.createQuote(createQuoteDTO);
-    // }
+    for (const createQuoteDTO of quotesJson) {
+      await this.createQuote(createQuoteDTO);
+    }
   }
 
   async createQuote(createQuoteDTO: CreateQuoteDTO) {
@@ -68,8 +68,8 @@ export class QuoteService {
       content: createQuoteDTO.content,
     });
 
-    if (exists) throw new Error("Quote already exists in the database.");
-    // if (exists) console.log(createQuoteDTO);
+    // if (exists) throw new Error("Quote already exists in the database.");
+    if (exists) console.log(createQuoteDTO);
 
     const quoteWithTopics =
       this.quoteUtility.extractTopicsFromQuote(createQuoteDTO);
@@ -179,6 +179,10 @@ export class QuoteService {
 
   async updateQuoteById(qid: string, updateQuoteDTO: UpdateQuoteDTO) {
     return await this.quoteRepository.updateQuoteById(qid, updateQuoteDTO);
+  }
+
+  async pullTopicIdFromQuoteById(qid: string, tid: string) {
+    return await this.quoteRepository.pullTopicIdFromQuoteById(qid, tid);
   }
 
   async deleteQuoteById(qid: string) {

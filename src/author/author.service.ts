@@ -1,12 +1,12 @@
-import { DeletionTracker } from "../global/utilities";
 import { QuoteService } from "../quote";
-import {
-  CreateAuthorDTO,
-  GetAuthorByNameDTO,
-  GetAuthorsDTO,
-  UpdateAuthorDTO,
-} from "./dtos";
 import { AuthorRepository } from "./index";
+import { DeletionTracker } from "../global/utilities";
+import {
+  GetAuthorsDTO,
+  CreateAuthorDTO,
+  UpdateAuthorDTO,
+  NameDTO,
+} from "./dtos";
 
 export class AuthorService {
   authorRepository: AuthorRepository;
@@ -53,8 +53,8 @@ export class AuthorService {
     return await this.authorRepository.getAuthors(filters);
   }
 
-  async getAuthorByName(getAuthorByName: GetAuthorByNameDTO) {
-    return await this.authorRepository.getAuthorByName(getAuthorByName);
+  async getAuthorByName(nameDTO: NameDTO) {
+    return await this.authorRepository.getAuthorByName(nameDTO);
   }
 
   async searchAuthors(page: number, search: string) {

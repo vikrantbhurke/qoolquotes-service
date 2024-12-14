@@ -10,7 +10,6 @@ export class PlaylistUtility {
     playlistDTO.description = playlist.description;
     playlistDTO.creatorId = playlist.creatorId;
     playlistDTO.access = playlist.access;
-    playlistDTO.likes = playlist.likes;
     return playlistDTO;
   }
 }

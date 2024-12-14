@@ -1,19 +1,19 @@
 import {
-  Body,
-  Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
-  Post,
   Req,
   Res,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
   UseBefore,
+  Controller,
 } from "routing-controllers";
-import { UserService, userService, UserUtility, userUtility } from "./index";
+import { Response } from "express";
 import { upload } from "./user.utility";
 import { SignInUserDTO, SignUpUserDTO, UpdateUserDTO } from "./dtos";
-import { Response } from "express";
+import { UserService, userService, UserUtility, userUtility } from "./index";
 
 const validateOptions = {
   validate: { whitelist: true, forbidNonWhitelisted: true },

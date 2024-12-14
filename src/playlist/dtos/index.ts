@@ -6,7 +6,6 @@ import GetPlaylistsDTO from "./get-playlists.dto";
 import CreatorIdDTO from "./creator-id.dto";
 import NameCreatorIdDTO from "./name-creator-id.dto";
 import SearchPlaylistsDTO from "./search-playlists.dto";
-import PlaylistIdDTO from "./playlist-id.dto";
 
 export {
   CreatePlaylistDTO,
@@ -17,5 +16,4 @@ export {
   CreatorIdDTO,
   NameCreatorIdDTO,
   SearchPlaylistsDTO,
-  PlaylistIdDTO,
 };

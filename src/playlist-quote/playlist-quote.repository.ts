@@ -1,20 +1,20 @@
-import PlaylistQuote from "./playlist-quote.model";
 import {
   deleteModelByField,
   deleteModelsByField,
 } from "../global/decorators/delete";
-import { createModel } from "../global/decorators/create";
 import {
   countModelsByField,
   getModelsByField,
   checkModel,
   getModelByField,
 } from "../global/decorators/read";
-import { Page } from "../global/types/page.type";
 import {
   getPlaylistsByQuoteIdConfig,
   getQuotesByPlaylistIdConfig,
 } from "./playlist-quote.config";
+import { Page } from "../global/types/page.type";
+import PlaylistQuote from "./playlist-quote.model";
+import { createModel } from "../global/decorators/create";
 import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
 
 export class PlaylistQuoteRepository {

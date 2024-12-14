@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Res } from "routing-controllers";
-import { MessageService, messageService } from "./index";
-import { CreateMessageDTO } from "./dtos";
 import { Response } from "express";
+import { CreateMessageDTO } from "./dtos";
+import { MessageService, messageService } from "./index";
+import { Body, Controller, Post, Res } from "routing-controllers";
 
 @Controller("/messages")
 export class MessageController {

@@ -1,14 +1,14 @@
+import {
+  checkModel,
+  getModelById,
+  getModelByField,
+} from "../global/decorators/read";
 import User from "./user.model";
+import { EmailDTO, UsernameDTO } from "./dtos";
+import { getUserByIdConfig } from "./user.config";
 import { createModel } from "../global/decorators/create";
 import { deleteModelById } from "../global/decorators/delete";
 import { updateModelById } from "../global/decorators/update";
-import {
-  checkModel,
-  getModelByField,
-  getModelById,
-} from "../global/decorators/read";
-import { getUserByIdConfig } from "./user.config";
-import { EmailDTO, UsernameDTO } from "./dtos";
 
 export class UserRepository {
   @createModel(User)

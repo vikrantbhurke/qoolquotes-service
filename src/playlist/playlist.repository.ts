@@ -1,24 +1,24 @@
 import {
-  countModelsByField,
-  getModelById,
   getModels,
-  getModelsByField,
+  getModelById,
   searchModels,
+  getModelsByField,
+  countModelsByField,
 } from "../global/decorators/read";
-import { createModel } from "../global/decorators/create";
-import Playlist from "./playlist.model";
 import {
-  getPlaylistByIdConfig,
-  getPlaylistsByCreatorIdConfig,
   getPlaylistsConfig,
+  getPlaylistByIdConfig,
   searchPlaylistsConfig,
+  getPlaylistsByCreatorIdConfig,
 } from "./playlist.config";
-import { updateModelById } from "../global/decorators/update";
 import {
   deleteModelById,
   deleteModelsByField,
 } from "../global/decorators/delete";
+import Playlist from "./playlist.model";
 import { CreatorIdDTO, UpdatePlaylistDTO } from "./dtos";
+import { createModel } from "../global/decorators/create";
+import { updateModelById } from "../global/decorators/update";
 
 export class PlaylistRepository {
   @createModel(Playlist)

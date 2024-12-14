@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
-import { QuoteLikerService, quoteLikerService } from "./index";
 import { Response } from "express";
+import { QuoteLikerService, quoteLikerService } from "./index";
+import { Controller, Delete, Get, Param, Post, Res } from "routing-controllers";
 
 @Controller("/quotes-likers")
 export class QuoteLikerController {
@@ -10,7 +10,7 @@ export class QuoteLikerController {
     this.quoteLikerService = quoteLikerService;
   }
 
-  @Post("/quoteId/:qid/likerId/:lid/like")
+  @Post("/quoteId/:qid/likerId/:lid")
   async likeQuote(
     @Param("qid") qid: string,
     @Param("lid") lid: string,
@@ -28,7 +28,7 @@ export class QuoteLikerController {
     }
   }
 
-  @Get("/:qid/likes")
+  @Get("/quoteId/:qid/likes")
   async countQuoteLikes(@Param("qid") qid: string, @Res() response: Response) {
     try {
       const count = await this.quoteLikerService.countQuotesLikersByQuoteId({
@@ -58,7 +58,7 @@ export class QuoteLikerController {
     }
   }
 
-  @Delete("/quoteId/:qid/likerId/:lid/unlike")
+  @Delete("/quoteId/:qid/likerId/:lid")
   async unlikeQuote(
     @Param("qid") qid: string,
     @Param("lid") lid: string,

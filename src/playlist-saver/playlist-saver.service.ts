@@ -1,6 +1,6 @@
+import { PlaylistSaverRepository } from "./index";
 import { PLAYLIST_LIMIT } from "../global/constants/constants";
 import { PlaylistIdSaverIdDTO, SaverIdDTO, PlaylistIdDTO } from "./dtos";
-import { PlaylistSaverRepository } from "./index";
 
 export class PlaylistSaverService {
   private playlistSaverRepository: PlaylistSaverRepository;

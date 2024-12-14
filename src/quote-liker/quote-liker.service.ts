@@ -1,5 +1,5 @@
-import { LikerIdDTO, QuoteIdDTO, QuoteIdLikerIdDTO } from "./dtos";
 import { QuoteLikerRepository } from "./index";
+import { LikerIdDTO, QuoteIdDTO, QuoteIdLikerIdDTO } from "./dtos";
 
 export class QuoteLikerService {
   private quoteLikerRepository: QuoteLikerRepository;
@@ -12,14 +12,14 @@ export class QuoteLikerService {
     return await this.quoteLikerRepository.createQuoteLiker(quoteIdLikerIdDTO);
   }
 
-  async checkQuoteLiker(quoteIdLikerIdDTO: QuoteIdLikerIdDTO) {
-    return await this.quoteLikerRepository.checkQuoteLiker(quoteIdLikerIdDTO);
-  }
-
   async countQuotesLikersByQuoteId(quoteIdDTO: QuoteIdDTO) {
     return await this.quoteLikerRepository.countQuotesLikersByQuoteId(
       quoteIdDTO
     );
+  }
+
+  async checkQuoteLiker(quoteIdLikerIdDTO: QuoteIdLikerIdDTO) {
+    return await this.quoteLikerRepository.checkQuoteLiker(quoteIdLikerIdDTO);
   }
 
   async deleteQuoteLiker(quoteIdLikerIdDTO: QuoteIdLikerIdDTO) {

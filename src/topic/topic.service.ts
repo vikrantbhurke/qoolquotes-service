@@ -1,13 +1,7 @@
-import { UpdateQuoteDTO } from "../quote/dtos";
-import { DeletionTracker } from "../global/utilities";
 import { QuoteService } from "../quote";
 import { TopicRepository } from "./index";
-import {
-  CreateTopicDTO,
-  GetTopicsDTO,
-  UpdateTopicDTO,
-  GetTopicByNameDTO,
-} from "./dtos";
+import { DeletionTracker } from "../global/utilities";
+import { CreateTopicDTO, GetTopicsDTO, UpdateTopicDTO, NameDTO } from "./dtos";
 
 export class TopicService {
   topicRepository: TopicRepository;
@@ -54,8 +48,8 @@ export class TopicService {
     return await this.topicRepository.getTopics(filters);
   }
 
-  async getTopicByName(getTopicByNamDTO: GetTopicByNameDTO) {
-    return await this.topicRepository.getTopicByName(getTopicByNamDTO);
+  async getTopicByName(nameDTO: NameDTO) {
+    return await this.topicRepository.getTopicByName(nameDTO);
   }
 
   async searchTopics(page: number, search: string) {
@@ -80,15 +74,15 @@ export class TopicService {
       if (!quotesPage.content.length) break;
 
       for (const quote of quotesPage.content) {
-        if (quote.topicIds.length === 1)
-          await this.quoteService.deleteQuoteById(quote._id);
+        if (quote.topicIds.length === 1) {
+          await this.quoteService.deleteQuoteById(quote._id.toString());
+        }
 
         if (quote.topicIds.length > 1) {
-          const index = quote.topicIds.indexOf(tid);
-          quote.topicIds.splice(index, 1);
-          await this.quoteService.updateQuoteById(quote._id, {
-            topicIds: quote.topicIds,
-          } as UpdateQuoteDTO);
+          await this.quoteService.pullTopicIdFromQuoteById(
+            quote._id.toString(),
+            tid
+          );
         }
       }
 

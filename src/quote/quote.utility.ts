@@ -12,7 +12,6 @@ export class QuoteUtility {
     quoteDTO.content = quote.content;
     quoteDTO.authorId = quote.authorId;
     quoteDTO.topicIds = quote.topicIds;
-    quoteDTO.likes = quote.likes;
     return quoteDTO;
   }
 

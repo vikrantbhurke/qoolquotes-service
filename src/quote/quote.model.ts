@@ -14,9 +14,6 @@ export class Quote extends Document {
   @prop({ type: Schema.Types.ObjectId, ref: "Topic", required: true })
   topicIds: Schema.Types.ObjectId[];
 
-  @prop({ type: Number, default: 0 })
-  likes: number;
-
   @prop({ type: Boolean, default: false })
   isDeleted: boolean;
 }

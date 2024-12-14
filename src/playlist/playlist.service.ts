@@ -1,16 +1,16 @@
+import {
+  CreatorIdDTO,
+  CreatePlaylistDTO,
+  UpdatePlaylistDTO,
+  PlaylistIdCreatorIdDTO,
+} from "./dtos";
 import { PlaylistRepository } from "./index";
 import { PlaylistSaverService } from "../playlist-saver";
 import { PlaylistQuoteService } from "../playlist-quote";
 import { PlaylistLikerService } from "../playlist-liker";
 import { DeletionTracker } from "../global/utilities";
-import {
-  PlaylistIdCreatorIdDTO,
-  CreatePlaylistDTO,
-  CreatorIdDTO,
-  UpdatePlaylistDTO,
-} from "./dtos";
-import { SaverIdDTO } from "../playlist-saver/dtos";
 import { PLAYLIST_LIMIT } from "../global/constants/constants";
+import { SaverIdDTO } from "../playlist-saver/dtos";
 
 export class PlaylistService {
   playlistRepository: PlaylistRepository;
@@ -66,8 +66,8 @@ export class PlaylistService {
     return newPlaylist;
   }
 
-  async clonePlaylist(clonePlaylistDTO: PlaylistIdCreatorIdDTO) {
-    const { playlistId, creatorId } = clonePlaylistDTO;
+  async clonePlaylist(playlistIdCreatorIdDTO: PlaylistIdCreatorIdDTO) {
+    const { playlistId, creatorId } = playlistIdCreatorIdDTO;
 
     const count = await this.countPlaylistsByCreatorId({
       creatorId,
@@ -188,15 +188,13 @@ export class PlaylistService {
     return playlist;
   }
 
-  async deletePlaylistsByCreatorId(
-    deletePlaylistsByCreatorIdDTO: CreatorIdDTO
-  ) {
+  async deletePlaylistsByCreatorId(creatorIdDTO: CreatorIdDTO) {
     let page = 0;
 
     while (true) {
       const playlistsPage = await this.getPlaylistsByCreatorId(
         page,
-        deletePlaylistsByCreatorIdDTO
+        creatorIdDTO
       );
 
       if (!playlistsPage.content.length) break;

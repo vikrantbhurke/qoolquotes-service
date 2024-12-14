@@ -1,13 +1,13 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  QueryParams,
   Res,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Controller,
+  QueryParams,
 } from "routing-controllers";
 import {
   PlaylistService,
@@ -16,14 +16,14 @@ import {
   playlistUtility,
 } from "./index";
 import {
-  CreatePlaylistDTO,
   GetPlaylistsDTO,
-  PlaylistResponseDTO,
   UpdatePlaylistDTO,
+  CreatePlaylistDTO,
+  PlaylistResponseDTO,
 } from "./dtos";
 import { Response } from "express";
-import { Page } from "global/types/page.type";
 import { Playlist } from "./playlist.model";
+import { Page } from "global/types/page.type";
 
 @Controller("/playlists")
 export class PlaylistController {

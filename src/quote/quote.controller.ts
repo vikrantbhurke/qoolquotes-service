@@ -1,13 +1,13 @@
 import {
-  Body,
-  Controller,
-  Delete,
   Get,
+  Res,
+  Post,
+  Body,
   Param,
   Patch,
-  Post,
+  Delete,
+  Controller,
   QueryParams,
-  Res,
 } from "routing-controllers";
 import {
   QuoteService,
@@ -18,10 +18,10 @@ import {
 import { Response } from "express";
 import { Page } from "global/types/page.type";
 import {
-  CreateQuoteDTO,
   GetQuotesDTO,
-  QuoteResponseDTO,
   UpdateQuoteDTO,
+  CreateQuoteDTO,
+  QuoteResponseDTO,
 } from "./dtos";
 import { Quote } from "./quote.model";
 

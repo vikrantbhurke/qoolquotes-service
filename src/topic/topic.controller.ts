@@ -1,12 +1,12 @@
 import {
-  Body,
-  Controller,
-  Delete,
+  Res,
   Get,
+  Body,
   Param,
   Patch,
+  Delete,
+  Controller,
   QueryParams,
-  Res,
 } from "routing-controllers";
 import {
   TopicService,
@@ -14,8 +14,8 @@ import {
   TopicUtility,
   topicUtility,
 } from "./index";
-import { Page } from "global/types/page.type";
 import { Response } from "express";
+import { Page } from "global/types/page.type";
 import { GetTopicsDTO, TopicResponseDTO, UpdateTopicDTO } from "./dtos";
 
 @Controller("/topics")

@@ -1,7 +1,7 @@
-import { PlaylistService } from "../playlist/playlist.service";
-import { QUOTE_LIMIT } from "../global/constants/constants";
-import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
 import { PlaylistQuoteRepository } from "./index";
+import { QUOTE_LIMIT } from "../global/constants/constants";
+import { PlaylistService } from "../playlist/playlist.service";
+import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
 
 export class PlaylistQuoteService {
   playlistQuoteRepository: PlaylistQuoteRepository;

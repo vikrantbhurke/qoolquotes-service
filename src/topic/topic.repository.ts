@@ -1,19 +1,14 @@
-import Topic from "./topic.model";
 import {
+  searchModels,
   getModelByField,
   getModelsByFieldDynamic,
-  searchModels,
 } from "../global/decorators/read";
+import Topic from "./topic.model";
 import { createModel } from "../global/decorators/create";
-import { getTopicsConfig, searchTopicsConfig } from "./topic.config";
 import { updateModelById } from "../global/decorators/update";
 import { deleteModelById } from "../global/decorators/delete";
-import {
-  CreateTopicDTO,
-  GetTopicsDTO,
-  UpdateTopicDTO,
-  GetTopicByNameDTO,
-} from "./dtos";
+import { CreateTopicDTO, UpdateTopicDTO, NameDTO } from "./dtos";
+import { getTopicsConfig, searchTopicsConfig } from "./topic.config";
 
 export class TopicRepository {
   @createModel(Topic)
@@ -27,7 +22,7 @@ export class TopicRepository {
   }
 
   @getModelByField(Topic, {})
-  async getTopicByName(getTopicByNamDTO: GetTopicByNameDTO, topic?: any) {
+  async getTopicByName(nameDTO: NameDTO, topic?: any) {
     return topic;
   }
 

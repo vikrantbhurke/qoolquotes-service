@@ -1,19 +1,14 @@
-import Author from "./author.model";
 import {
+  searchModels,
   getModelByField,
   getModelsByFieldDynamic,
-  searchModels,
 } from "../global/decorators/read";
+import Author from "./author.model";
 import { createModel } from "../global/decorators/create";
-import { getAuthorsDynamicConfig, searchAuthorsConfig } from "./author.config";
 import { updateModelById } from "../global/decorators/update";
 import { deleteModelById } from "../global/decorators/delete";
-import {
-  CreateAuthorDTO,
-  GetAuthorByNameDTO,
-  GetAuthorsDTO,
-  UpdateAuthorDTO,
-} from "./dtos";
+import { CreateAuthorDTO, NameDTO, UpdateAuthorDTO } from "./dtos";
+import { getAuthorsDynamicConfig, searchAuthorsConfig } from "./author.config";
 
 export class AuthorRepository {
   @createModel(Author)
@@ -27,7 +22,7 @@ export class AuthorRepository {
   }
 
   @getModelByField(Author, {})
-  async getAuthorByName(getAuthorByName: GetAuthorByNameDTO, author?: any) {
+  async getAuthorByName(nameDTO: NameDTO, author?: any) {
     return author;
   }
 
