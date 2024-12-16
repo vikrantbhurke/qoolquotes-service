@@ -3,6 +3,6 @@ import { PAGE_SIZE } from "../global/constants/constants";
 
 export const getPlaylistBySaverIdConfig = {
   sort: "createdAt",
-  order: Order.Asc,
+  order: Order.Desc,
   PAGE_SIZE,
 };

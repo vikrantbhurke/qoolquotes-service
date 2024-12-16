@@ -1,5 +1,4 @@
 import {
-  getModels,
   getModelById,
   searchModels,
   getModelsByField,
@@ -31,8 +30,8 @@ export class PlaylistRepository {
     return count;
   }
 
-  @getModels(Playlist, getPlaylistsConfig)
-  async getPlaylists(page: number, playlistsPage?: any) {
+  @getModelsByField(Playlist, getPlaylistsConfig)
+  async getPlaylists(page: number, filters: any, playlistsPage?: any) {
     return playlistsPage;
   }
 

@@ -1,6 +1,6 @@
-import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
-import { Document, Schema } from "mongoose";
 import { Access } from "./enums";
+import { Document, Schema } from "mongoose";
+import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 
 @modelOptions({
   schemaOptions: { collection: "Playlists", timestamps: true },

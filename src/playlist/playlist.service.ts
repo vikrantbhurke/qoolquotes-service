@@ -11,6 +11,7 @@ import { PlaylistLikerService } from "../playlist-liker";
 import { DeletionTracker } from "../global/utilities";
 import { PLAYLIST_LIMIT } from "../global/constants/constants";
 import { SaverIdDTO } from "../playlist-saver/dtos";
+import { Access } from "./enums";
 
 export class PlaylistService {
   playlistRepository: PlaylistRepository;
@@ -117,7 +118,9 @@ export class PlaylistService {
   }
 
   async getPlaylists(page: number) {
-    return await this.playlistRepository.getPlaylists(page);
+    return await this.playlistRepository.getPlaylists(page, {
+      access: Access.Public,
+    });
   }
 
   async searchPlaylists(page: number, search: string) {
