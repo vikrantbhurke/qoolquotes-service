@@ -13,7 +13,7 @@ import {
   UpdateQuoteDTO,
   PlaylistIdDTO,
 } from "./dtos";
-// import quotesJson from "../../../data/quotes.json";
+// import allQuotes from "../../../data/allQuotes.json";
 
 export class QuoteService {
   quoteRepository: QuoteRepository;
@@ -58,7 +58,7 @@ export class QuoteService {
   }
 
   async createQuotes() {
-    // for (const createQuoteDTO of quotesJson) {
+    // for (const createQuoteDTO of allQuotes) {
     //   await this.createQuote(createQuoteDTO);
     // }
   }
@@ -68,8 +68,11 @@ export class QuoteService {
       content: createQuoteDTO.content,
     });
 
-    // if (exists) throw new Error("Quote already exists in the database.");
-    if (exists) console.log(createQuoteDTO);
+    if (exists) throw new Error("Quote already exists in the database.");
+    // if (exists) {
+    //   console.log(createQuoteDTO);
+    //   return;
+    // }
 
     const quoteWithTopics =
       this.quoteUtility.extractTopicsFromQuote(createQuoteDTO);
@@ -79,6 +82,8 @@ export class QuoteService {
       authorId: "",
       topicIds: [],
     };
+
+    // console.log("The Quote", quoteWithTopics);
 
     for (const topicName of quoteWithTopics.topics) {
       const existingTopic = await this.topicService.getTopicByName({

@@ -28,7 +28,7 @@ const searchModelsByField = (
       const totalElements = await Model.countDocuments(searchQuery).exec();
 
       let query = Model.find(searchQuery)
-        .sort({ [sort]: order === Order.Asc ? 1 : -1 })
+        .sort({ [sort]: order === Order.Ascending ? 1 : -1 })
         .skip(page * PAGE_SIZE)
         .limit(PAGE_SIZE)
         .lean();

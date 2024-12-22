@@ -4,8 +4,6 @@ import { Order } from "../global/enums";
 export const getPlaylistsConfig = {
   refs: ["creatorId"],
   refFields: [" profilepic firstname lastname username"],
-  sort: "createdAt",
-  order: Order.Desc,
   PAGE_SIZE,
 };
 
@@ -14,7 +12,7 @@ export const searchPlaylistsConfig = {
   refFields: [" profilepic firstname lastname username"],
   searchField: "name",
   sort: "createdAt",
-  order: Order.Desc,
+  order: Order.Descending,
   PAGE_SIZE,
 };
 
@@ -22,7 +20,7 @@ export const getPlaylistsByCreatorIdConfig = {
   refs: ["creatorId"],
   refFields: [" profilepic firstname lastname username"],
   sort: "createdAt",
-  order: Order.Desc,
+  order: Order.Descending,
   PAGE_SIZE,
 };
 

@@ -5,6 +5,6 @@ export const getUserByIdConfig = {};
 
 export const getUsersByUsernameConfig = {
   sort: "firstname",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };

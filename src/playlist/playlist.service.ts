@@ -3,6 +3,7 @@ import {
   CreatePlaylistDTO,
   UpdatePlaylistDTO,
   PlaylistIdCreatorIdDTO,
+  GetPlaylistsDTO,
 } from "./dtos";
 import { PlaylistRepository } from "./index";
 import { PlaylistSaverService } from "../playlist-saver";
@@ -12,6 +13,7 @@ import { DeletionTracker } from "../global/utilities";
 import { PLAYLIST_LIMIT } from "../global/constants/constants";
 import { SaverIdDTO } from "../playlist-saver/dtos";
 import { Access } from "./enums";
+import { Order } from "../global/enums";
 
 export class PlaylistService {
   playlistRepository: PlaylistRepository;
@@ -117,8 +119,8 @@ export class PlaylistService {
     );
   }
 
-  async getPlaylists(page: number) {
-    return await this.playlistRepository.getPlaylists(page, {
+  async getPlaylists(getPlaylistsDTO: GetPlaylistsDTO) {
+    return await this.playlistRepository.getPlaylists(getPlaylistsDTO, {
       access: Access.Public,
     });
   }
@@ -166,6 +168,22 @@ export class PlaylistService {
       pid,
       updatePlaylistDTO
     );
+  }
+
+  async incPlaylistLikes(pid: string) {
+    return await this.playlistRepository.incPlaylistLikes(pid);
+  }
+
+  async decPlaylistLikes(pid: string) {
+    return await this.playlistRepository.decPlaylistLikes(pid);
+  }
+
+  async incPlaylistQuotes(pid: string) {
+    return await this.playlistRepository.incPlaylistQuotes(pid);
+  }
+
+  async decPlaylistQuotes(pid: string) {
+    return await this.playlistRepository.decPlaylistQuotes(pid);
   }
 
   async deletePlaylistById(pid: string) {

@@ -17,7 +17,7 @@ export class TopicRepository {
   }
 
   @getModelsByFieldDynamic(Topic, getTopicsConfig)
-  async getTopics(getTopicsDTO: any, topicsPage?: any) {
+  async getTopics(getTopicsDTO: any, fieldObj: any, topicsPage?: any) {
     return topicsPage;
   }
 

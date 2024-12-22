@@ -18,6 +18,10 @@ export class PlaylistQuoteService {
   }
 
   async createPlaylistQuote(playlistIdQuoteIdDTO: PlaylistIdQuoteIdDTO) {
+    await this.playlistService.incPlaylistQuotes(
+      playlistIdQuoteIdDTO.playlistId
+    );
+
     const count = await this.countPlaylistsQuotesByPlaylistId({
       playlistId: playlistIdQuoteIdDTO.playlistId,
     });
@@ -69,6 +73,8 @@ export class PlaylistQuoteService {
 
   async deletePlaylistQuote(playlistIdQuoteIdDTO: PlaylistIdQuoteIdDTO) {
     const { playlistId } = playlistIdQuoteIdDTO;
+
+    await this.playlistService.decPlaylistQuotes(playlistId);
 
     await this.playlistQuoteRepository.deletePlaylistQuote(
       playlistIdQuoteIdDTO

@@ -17,7 +17,7 @@ export class AuthorRepository {
   }
 
   @getModelsByFieldDynamic(Author, getAuthorsDynamicConfig)
-  async getAuthors(getAuthorsDTO: any, authorsPage?: any) {
+  async getAuthors(getAuthorsDTO: any, fieldObj: any, authorsPage?: any) {
     return authorsPage;
   }
 

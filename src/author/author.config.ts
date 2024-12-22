@@ -8,6 +8,6 @@ export const getAuthorsDynamicConfig = {
 export const searchAuthorsConfig = {
   searchField: "name",
   sort: "name",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };

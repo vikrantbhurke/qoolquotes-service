@@ -13,7 +13,7 @@ const getModels =
       const totalElements = await Model.countDocuments().exec();
 
       let query = Model.find()
-        .sort({ [sort]: order === Order.Asc ? 1 : -1 })
+        .sort({ [sort]: order === Order.Ascending ? 1 : -1 })
         .skip(page * PAGE_SIZE)
         .limit(PAGE_SIZE)
         .lean();

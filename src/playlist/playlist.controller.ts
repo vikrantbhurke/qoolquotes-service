@@ -72,11 +72,13 @@ export class PlaylistController {
 
   @Get()
   async getPlaylists(
-    @QueryParams() { page }: GetPlaylistsDTO,
+    @QueryParams() getPlaylistsDTO: GetPlaylistsDTO,
     @Res() response: Response
   ) {
     try {
-      const playlistsPage: Page = await this.playlistService.getPlaylists(page);
+      const playlistsPage: Page = await this.playlistService.getPlaylists(
+        getPlaylistsDTO
+      );
 
       const playlistsDTO: PlaylistResponseDTO[] = playlistsPage.content.map(
         (playlist) =>

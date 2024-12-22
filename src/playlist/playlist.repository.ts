@@ -3,6 +3,7 @@ import {
   searchModels,
   getModelsByField,
   countModelsByField,
+  getModelsByFieldDynamic,
 } from "../global/decorators/read";
 import {
   getPlaylistsConfig,
@@ -17,7 +18,11 @@ import {
 import Playlist from "./playlist.model";
 import { CreatorIdDTO, UpdatePlaylistDTO } from "./dtos";
 import { createModel } from "../global/decorators/create";
-import { updateModelById } from "../global/decorators/update";
+import {
+  decNumModelById,
+  incNumModelById,
+  updateModelById,
+} from "../global/decorators/update";
 
 export class PlaylistRepository {
   @createModel(Playlist)
@@ -30,8 +35,8 @@ export class PlaylistRepository {
     return count;
   }
 
-  @getModelsByField(Playlist, getPlaylistsConfig)
-  async getPlaylists(page: number, filters: any, playlistsPage?: any) {
+  @getModelsByFieldDynamic(Playlist, getPlaylistsConfig)
+  async getPlaylists(getPlaylistsDTO: any, fieldObj: any, playlistsPage?: any) {
     return playlistsPage;
   }
 
@@ -60,6 +65,26 @@ export class PlaylistRepository {
     updatePlaylistDTO: UpdatePlaylistDTO,
     playlist?: any
   ) {
+    return playlist;
+  }
+
+  @incNumModelById(Playlist, "likes")
+  async incPlaylistLikes(pid: string, playlist?: any) {
+    return playlist;
+  }
+
+  @decNumModelById(Playlist, "likes")
+  async decPlaylistLikes(pid: string, playlist?: any) {
+    return playlist;
+  }
+
+  @incNumModelById(Playlist, "quotes")
+  async incPlaylistQuotes(pid: string, playlist?: any) {
+    return playlist;
+  }
+
+  @decNumModelById(Playlist, "quotes")
+  async decPlaylistQuotes(pid: string, playlist?: any) {
     return playlist;
   }
 

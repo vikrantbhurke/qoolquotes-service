@@ -43,14 +43,14 @@ export class AuthorService {
       filters = { name: alphaRegex };
     }
 
-    filters = {
-      ...filters,
-      sort,
-      order,
-      page,
-    };
-
-    return await this.authorRepository.getAuthors(filters);
+    return await this.authorRepository.getAuthors(
+      {
+        sort,
+        order,
+        page,
+      },
+      filters
+    );
   }
 
   async getAuthorByName(nameDTO: NameDTO) {

@@ -7,8 +7,10 @@ import {
   playlistLikerRepository,
   PlaylistLikerRepository,
 } from "./playlist-liker.repository";
+import { playlistService } from "../playlist/playlist.service";
 
 playlistLikerService.setPlaylistLikerRepository(playlistLikerRepository);
+playlistLikerService.setPlaylistService(playlistService);
 
 export {
   playlistLikerService,

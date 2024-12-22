@@ -38,14 +38,14 @@ export class TopicService {
       filters = { name: alphaRegex };
     }
 
-    filters = {
-      ...filters,
-      sort,
-      order,
-      page,
-    };
-
-    return await this.topicRepository.getTopics(filters);
+    return await this.topicRepository.getTopics(
+      {
+        sort,
+        order,
+        page,
+      },
+      filters
+    );
   }
 
   async getTopicByName(nameDTO: NameDTO) {

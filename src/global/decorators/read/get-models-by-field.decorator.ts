@@ -14,7 +14,7 @@ const getModelsByField =
       const totalElements = await Model.countDocuments(fieldObj).exec();
 
       let query = Model.find(fieldObj)
-        .sort({ [sort]: order === Order.Asc ? 1 : -1 })
+        .sort({ [sort]: order === Order.Ascending ? 1 : -1 })
         .skip(page * PAGE_SIZE)
         .limit(PAGE_SIZE)
         .lean();

@@ -1,8 +1,10 @@
 import { PlaylistLikerRepository } from "./index";
 import { PlaylistIdLikerIdDTO, LikerIdDTO, PlaylistIdDTO } from "./dtos";
+import { PlaylistService } from "../playlist/playlist.service";
 
 export class PlaylistLikerService {
-  private playlistLikerRepository: PlaylistLikerRepository;
+  playlistLikerRepository: PlaylistLikerRepository;
+  playlistService: PlaylistService;
 
   setPlaylistLikerRepository(
     playlistLikerRepository: PlaylistLikerRepository
@@ -10,7 +12,15 @@ export class PlaylistLikerService {
     this.playlistLikerRepository = playlistLikerRepository;
   }
 
+  setPlaylistService(playlistService: PlaylistService): void {
+    this.playlistService = playlistService;
+  }
+
   async createPlaylistLiker(playlistIdLikerIdDTO: PlaylistIdLikerIdDTO) {
+    await this.playlistService.incPlaylistLikes(
+      playlistIdLikerIdDTO.playlistId
+    );
+
     return await this.playlistLikerRepository.createPlaylistLiker(
       playlistIdLikerIdDTO
     );
@@ -29,6 +39,10 @@ export class PlaylistLikerService {
   }
 
   async deletePlaylistLiker(playlistIdLikerIdDTO: PlaylistIdLikerIdDTO) {
+    await this.playlistService.decPlaylistLikes(
+      playlistIdLikerIdDTO.playlistId
+    );
+
     return await this.playlistLikerRepository.deletePlaylistLiker(
       playlistIdLikerIdDTO
     );

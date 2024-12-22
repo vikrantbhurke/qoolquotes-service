@@ -10,7 +10,7 @@ export const getQuotesByAuthorConfig = {
   refs: ["authorId", "topicIds"],
   refFields: ["name", "name"],
   sort: "content",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };
 
@@ -18,7 +18,7 @@ export const getQuotesByTopicConfig = {
   refs: ["authorId", "topicIds"],
   refFields: ["name", "name"],
   sort: "content",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };
 
@@ -27,7 +27,7 @@ export const searchQuotesConfig = {
   refFields: ["name", "name"],
   searchField: "content",
   sort: "content",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };
 
@@ -35,6 +35,6 @@ export const getQuoteByIdConfig = {
   refs: ["authorId", "topicIds"],
   refFields: ["name", "name"],
   sort: "content",
-  order: Order.Asc,
+  order: Order.Ascending,
   PAGE_SIZE,
 };

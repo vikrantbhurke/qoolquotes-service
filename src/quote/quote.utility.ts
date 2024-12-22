@@ -20,34 +20,49 @@ export class QuoteUtility {
 
     const tokens = createQuoteDTO.content
       .toLowerCase()
-      // Remove every character except alphabet and single quote
-      .replace(/[^\w\s']+/g, "")
+      // Remove every character except alphabet and single quote and dash
+      .replace(/[^\w\s'-]+/g, "")
+      // Remove single quote at the start and end of word
+      // .replace(/(^| )'(\w+)'(?=$| )/g, "$1$2")
       // Remove digits
       .replace(/\d/g, "")
       .split(" ");
+
+    // const tokensWithoutStopWords = tokens.filter(
+    //   (token) => !stopWordsEnglish.includes(token)
+    // );
 
     const tokensWithoutStopWords = tokens.filter(
       (token) => !stopWordsEnglish.includes(token)
     );
 
-    const filteredTokens = tokenizer.tokenize(
-      tokensWithoutStopWords
-        .join(" ")
-        // Remove dash and single quote
-        .replace(/['-]/g, "")
+    const filteredTokens = tokenizer.tokenize(tokensWithoutStopWords.join(" "));
+
+    const tokensWithoutStopWordsTwo = filteredTokens.filter(
+      (token) => !stopWordsEnglish.includes(token)
     );
 
-    const lemmatizedTokens = filteredTokens.map((token) => {
+    const lemmatizedTokens = tokensWithoutStopWordsTwo.map((token) => {
       return lemmatizer(token);
     });
 
-    const capitalizedLemmatizedTokens = lemmatizedTokens.map((token) => {
-      return token.charAt(0).toUpperCase() + token.slice(1);
-    });
+    const tokensWithoutStopWordsThree = lemmatizedTokens.filter(
+      (token) => !stopWordsEnglish.includes(token)
+    );
+
+    const capitalizedLemmatizedTokens = tokensWithoutStopWordsThree.map(
+      (token) => {
+        return token.charAt(0).toUpperCase() + token.slice(1);
+      }
+    );
+
+    const tokensWithoutStopWordsFour = capitalizedLemmatizedTokens.filter(
+      (token) => !stopWordsEnglish.includes(token)
+    );
 
     return {
       ...createQuoteDTO,
-      topics: Array.from(new Set(capitalizedLemmatizedTokens)),
+      topics: Array.from(new Set(tokensWithoutStopWordsFour)),
     };
   }
 }
