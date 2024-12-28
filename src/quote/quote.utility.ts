@@ -22,15 +22,9 @@ export class QuoteUtility {
       .toLowerCase()
       // Remove every character except alphabet and single quote and dash
       .replace(/[^\w\s'-]+/g, "")
-      // Remove single quote at the start and end of word
-      // .replace(/(^| )'(\w+)'(?=$| )/g, "$1$2")
       // Remove digits
       .replace(/\d/g, "")
       .split(" ");
-
-    // const tokensWithoutStopWords = tokens.filter(
-    //   (token) => !stopWordsEnglish.includes(token)
-    // );
 
     const tokensWithoutStopWords = tokens.filter(
       (token) => !stopWordsEnglish.includes(token)
