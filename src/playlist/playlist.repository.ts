@@ -36,7 +36,11 @@ export class PlaylistRepository {
   }
 
   @getModelsByFieldDynamic(Playlist, getPlaylistsConfig)
-  async getPlaylists(getPlaylistsDTO: any, fieldObj: any, playlistsPage?: any) {
+  async getPlaylists(
+    getPlaylistsDTO: any,
+    accessDTO: any,
+    playlistsPage?: any
+  ) {
     return playlistsPage;
   }
 

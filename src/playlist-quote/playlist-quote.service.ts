@@ -18,10 +18,6 @@ export class PlaylistQuoteService {
   }
 
   async createPlaylistQuote(playlistIdQuoteIdDTO: PlaylistIdQuoteIdDTO) {
-    await this.playlistService.incPlaylistQuotes(
-      playlistIdQuoteIdDTO.playlistId
-    );
-
     const count = await this.countPlaylistsQuotesByPlaylistId({
       playlistId: playlistIdQuoteIdDTO.playlistId,
     });
@@ -30,6 +26,10 @@ export class PlaylistQuoteService {
       throw new Error(
         `You can't add more than ${QUOTE_LIMIT} quotes to a playlist.`
       );
+
+    await this.playlistService.incPlaylistQuotes(
+      playlistIdQuoteIdDTO.playlistId
+    );
 
     return await this.playlistQuoteRepository.createPlaylistQuote(
       playlistIdQuoteIdDTO
@@ -74,8 +74,6 @@ export class PlaylistQuoteService {
   async deletePlaylistQuote(playlistIdQuoteIdDTO: PlaylistIdQuoteIdDTO) {
     const { playlistId } = playlistIdQuoteIdDTO;
 
-    await this.playlistService.decPlaylistQuotes(playlistId);
-
     await this.playlistQuoteRepository.deletePlaylistQuote(
       playlistIdQuoteIdDTO
     );
@@ -85,10 +83,11 @@ export class PlaylistQuoteService {
     });
 
     if (!quote) await this.playlistService.deletePlaylistById(playlistId);
+    else await this.playlistService.decPlaylistQuotes(playlistId);
   }
 
   async deletePlaylistsQuotesByPlaylistId(playlistIdDTO: PlaylistIdDTO) {
-    return await this.playlistQuoteRepository.deletePlaylistsQuotesByPlaylistId(
+    await this.playlistQuoteRepository.deletePlaylistsQuotesByPlaylistId(
       playlistIdDTO
     );
   }

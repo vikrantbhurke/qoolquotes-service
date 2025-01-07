@@ -3535,6 +3535,18 @@ export const modification = [
     old: "Grind",
     new: "Ground",
   },
+  {
+    old: "Rector",
+    new: "Director",
+  },
+  {
+    old: "Son",
+    new: "Person",
+  },
+  {
+    old: "Relatusonships",
+    new: "Relationships",
+  },
 ];
 
 // Duplicates
