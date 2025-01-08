@@ -1,44 +1,1289 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  style="color-scheme: light dark">
   <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <meta name="x-apple-disable-message-reformatting" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark only" />
+
+    <style data-premailer="ignore">
+      :root {
+        color-scheme: light dark;
+      }
+
+      @media screen and (max-width: 600px) {
+        u + .body {
+          width: 100vw !important;
+        }
+      }
+
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+    </style>
+    <!--[if mso]>
+      <style type="text/css">
+        body,
+        table,
+        td {
+          font-family: Arial, Helvetica, sans-serif !important;
+        }
+
+        img {
+          -ms-interpolation-mode: bicubic;
+        }
+
+        .box {
+          border-color: #eee !important;
+        }
+      </style>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <link
+      href="https://rsms.me/inter/inter.css"
+      rel="stylesheet"
+      type="text/css"
+      data-premailer="ignore" />
+    <style type="text/css" data-premailer="ignore">
+      @import url(https://rsms.me/inter/inter.css);
+    </style>
+    <!--<![endif]-->
+
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        src: url("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.ttf")
+          format("truetype");
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f9fafb;
+        font-size: 15px;
+        line-height: 160%;
+        color: #4b5563;
+        width: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      }
+
+      body {
+        font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco,
+          Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+      }
+
+      img {
+        display: inline-block;
+        border: 0 none;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        vertical-align: bottom;
+        font-size: 0;
+      }
+
+      a:hover {
+        text-decoration: underline !important;
+      }
+
+      .btn:hover {
+        text-decoration: none !important;
+      }
+
+      .btn.bg-secondary:hover {
+        background-color: #f9fafb;
+      }
+
+      a.bg-blue:hover {
+        background-color: #0667c2 !important;
+      }
+
+      a.bg-azure:hover {
+        background-color: #3592df !important;
+      }
+
+      a.bg-indigo:hover {
+        background-color: #3458ea !important;
+      }
+
+      a.bg-purple:hover {
+        background-color: #a636c2 !important;
+      }
+
+      a.bg-pink:hover {
+        background-color: #d02a64 !important;
+      }
+
+      a.bg-red:hover {
+        background-color: #d32c2c !important;
+      }
+
+      a.bg-orange:hover {
+        background-color: #e86107 !important;
+      }
+
+      a.bg-yellow:hover {
+        background-color: #e69500 !important;
+      }
+
+      a.bg-lime:hover {
+        background-color: #6baa14 !important;
+      }
+
+      a.bg-green:hover {
+        background-color: #2ca73f !important;
+      }
+
+      a.bg-teal:hover {
+        background-color: #0b986e !important;
+      }
+
+      a.bg-cyan:hover {
+        background-color: #1596aa !important;
+      }
+
+      a.bg-gray:hover {
+        background-color: #5f6b79 !important;
+      }
+
+      a.bg-white:hover {
+        background-color: #f7f7f7 !important;
+      }
+
+      .img-hover:hover img {
+        opacity: 0.64;
+      }
+
+      .theme-dark a.bg-secondary:hover {
+        background-color: #354258 !important;
+      }
+
+      .theme-dark .btn.bg-bordered:hover {
+        background-color: #066fd1 !important;
+        color: #ffffff !important;
+      }
+
+      .theme-dark .btn.bg-bordered:hover .btn-span {
+        color: #ffffff !important;
+      }
+
+      @media only screen and (max-width: 560px) {
+        body {
+          font-size: 14px !important;
+        }
+
+        .content {
+          padding: 24px !important;
+        }
+
+        .content-image-text {
+          padding: 24px !important;
+        }
+
+        .content-image {
+          height: 100px !important;
+        }
+
+        .content-image-text {
+          padding-top: 96px !important;
+        }
+
+        h1 {
+          font-size: 24px !important;
+        }
+
+        .h1 {
+          font-size: 24px !important;
+        }
+
+        h2 {
+          font-size: 20px !important;
+        }
+
+        .h2 {
+          font-size: 20px !important;
+        }
+
+        h3 {
+          font-size: 18px !important;
+        }
+
+        .h3 {
+          font-size: 18px !important;
+        }
+
+        .col {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .col-spacer {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .col-spacer-xs {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .col-spacer-sm {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .col-hr {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .row {
+          display: table !important;
+          width: 100% !important;
+        }
+
+        .col-hr {
+          border: 0 !important;
+          height: 24px !important;
+          width: auto !important;
+          background: transparent !important;
+        }
+
+        .col-spacer {
+          width: 100% !important;
+          height: 24px !important;
+        }
+
+        .col-spacer-sm {
+          height: 16px !important;
+        }
+
+        .col-spacer-xs {
+          height: 8px !important;
+        }
+
+        .chart-cell-spacer {
+          width: 4px !important;
+        }
+
+        .text-mobile-center {
+          text-align: center !important;
+        }
+
+        .d-mobile-none {
+          display: none !important;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .text-muted {
+          color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .bg-body {
+          background: #212936 !important;
+        }
+
+        .day {
+          background: #212936 !important;
+        }
+
+        .shape {
+          background: #212936 !important;
+        }
+
+        .box {
+          background: #2b3648 !important;
+          border-color: #2b3648 !important;
+          color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .box-table {
+          background: #2b3648 !important;
+          border-color: #2b3648 !important;
+          color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .text-default {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .chart-bar-label {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h1 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h1 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h2 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h2 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h3 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h3 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h4 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h4 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h5 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h5 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        h6 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .h6 {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .col-hr {
+          border-color: #2b3648 !important;
+          background-color: #212936 !important;
+        }
+
+        .col-mobile-hr {
+          border-color: #2b3648 !important;
+          background-color: #212936 !important;
+        }
+
+        .border-top {
+          border-color: #3e495b !important;
+        }
+
+        .border-right {
+          border-color: #3e495b !important;
+        }
+
+        .border-bottom {
+          border-color: #3e495b !important;
+        }
+
+        .border-left {
+          border-color: #3e495b !important;
+        }
+
+        .list-item {
+          border-color: #3e495b !important;
+        }
+
+        .border {
+          border-color: #3e495b !important;
+        }
+
+        .bg-light {
+          background-color: #354258 !important;
+        }
+
+        .quote {
+          background-color: #354258 !important;
+        }
+
+        .calendar-day {
+          background-color: #354258 !important;
+        }
+
+        .bg-secondary {
+          background: #2b3648 !important;
+        }
+
+        a.bg-secondary:hover {
+          background-color: #354258 !important;
+        }
+
+        .btn.bg-secondary .btn-span {
+          color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .border-secondary {
+          border-color: #3e495b !important;
+        }
+
+        .btn.bg-bordered:hover {
+          background-color: #066fd1 !important;
+          color: #ffffff !important;
+        }
+
+        .btn.bg-bordered:hover .btn-span {
+          color: #ffffff !important;
+        }
+
+        .bg-blue-lightest {
+          background-color: #273c56 !important;
+        }
+
+        .bg-blue-lighter {
+          background-color: #204771 !important;
+        }
+
+        .bg-blue-light {
+          background-color: #115ea8 !important;
+        }
+
+        .bg-blue-dark {
+          background-color: #388cda !important;
+        }
+
+        .bg-blue-darker {
+          background-color: #9bc5ed !important;
+          color: #212936 !important;
+        }
+
+        .bg-blue-darkest {
+          background-color: #b4d4f1 !important;
+          color: #212936 !important;
+        }
+
+        .bg-blue-lt {
+          color: #066fd1 !important;
+          background: #cde2f6 !important;
+        }
+
+        .bg-azure-lightest {
+          background-color: #2d4057 !important;
+        }
+
+        .bg-azure-lighter {
+          background-color: #325476 !important;
+        }
+
+        .bg-azure-light {
+          background-color: #3b7bb3 !important;
+        }
+
+        .bg-azure-dark {
+          background-color: #68ade7 !important;
+        }
+
+        .bg-azure-darker {
+          background-color: #b3d6f3 !important;
+          color: #212936 !important;
+        }
+
+        .bg-azure-darkest {
+          background-color: #c6e0f6 !important;
+          color: #212936 !important;
+        }
+
+        .bg-azure-lt {
+          color: #4299e1 !important;
+          background: #d9ebf9 !important;
+        }
+
+        .bg-indigo-lightest {
+          background-color: #2d3b58 !important;
+        }
+
+        .bg-indigo-lighter {
+          background-color: #324479 !important;
+        }
+
+        .bg-indigo-light {
+          background-color: #3b56ba !important;
+        }
+
+        .bg-indigo-dark {
+          background-color: #6882ef !important;
+        }
+
+        .bg-indigo-darker {
+          background-color: #b3c1f7 !important;
+          color: #212936 !important;
+        }
+
+        .bg-indigo-darkest {
+          background-color: #c6d0f9 !important;
+          color: #212936 !important;
+        }
+
+        .bg-indigo-lt {
+          color: #4263eb !important;
+          background: #d9e0fb !important;
+        }
+
+        .bg-purple-lightest {
+          background-color: #383755 !important;
+        }
+
+        .bg-purple-lighter {
+          background-color: #52386f !important;
+        }
+
+        .bg-purple-light {
+          background-color: #873ca2 !important;
+        }
+
+        .bg-purple-dark {
+          background-color: #be65d4 !important;
+        }
+
+        .bg-purple-darker {
+          background-color: #dfb2e9 !important;
+          color: #212936 !important;
+        }
+
+        .bg-purple-darkest {
+          background-color: #e7c5ef !important;
+          color: #212936 !important;
+        }
+
+        .bg-purple-lt {
+          color: #ae3ec9 !important;
+          background: #efd8f4 !important;
+        }
+
+        .bg-pink-lightest {
+          background-color: #3c364c !important;
+        }
+
+        .bg-pink-lighter {
+          background-color: #5e3553 !important;
+        }
+
+        .bg-pink-light {
+          background-color: #a33461 !important;
+        }
+
+        .bg-pink-dark {
+          background-color: #de5c89 !important;
+        }
+
+        .bg-pink-darker {
+          background-color: #efadc4 !important;
+          color: #212936 !important;
+        }
+
+        .bg-pink-darkest {
+          background-color: #f3c2d3 !important;
+          color: #212936 !important;
+        }
+
+        .bg-pink-lt {
+          color: #d6336c !important;
+          background: #f7d6e2 !important;
+        }
+
+        .bg-red-lightest {
+          background-color: #3c3647 !important;
+        }
+
+        .bg-red-lighter {
+          background-color: #5e3744 !important;
+        }
+
+        .bg-red-light {
+          background-color: #a3383e !important;
+        }
+
+        .bg-red-dark {
+          background-color: #de6161 !important;
+        }
+
+        .bg-red-darker {
+          background-color: #efb0b0 !important;
+          color: #212936 !important;
+        }
+
+        .bg-red-darkest {
+          background-color: #f3c4c4 !important;
+          color: #212936 !important;
+        }
+
+        .bg-red-lt {
+          color: #d63939 !important;
+          background: #f7d7d7 !important;
+        }
+
+        .bg-orange-lightest {
+          background-color: #3f3b42 !important;
+        }
+
+        .bg-orange-lighter {
+          background-color: #684535 !important;
+        }
+
+        .bg-orange-light {
+          background-color: #ba581b !important;
+        }
+
+        .bg-orange-dark {
+          background-color: #f98539 !important;
+        }
+
+        .bg-orange-darker {
+          background-color: #fcc29c !important;
+          color: #212936 !important;
+        }
+
+        .bg-orange-darkest {
+          background-color: #fdd1b5 !important;
+          color: #212936 !important;
+        }
+
+        .bg-orange-lt {
+          color: #f76707 !important;
+          background: #fde1cd !important;
+        }
+
+        .bg-yellow-lightest {
+          background-color: #3f4141 !important;
+        }
+
+        .bg-yellow-lighter {
+          background-color: #685632 !important;
+        }
+
+        .bg-yellow-light {
+          background-color: #b88016 !important;
+        }
+
+        .bg-yellow-dark {
+          background-color: #f7b233 !important;
+        }
+
+        .bg-yellow-darker {
+          background-color: #fbd999 !important;
+          color: #212936 !important;
+        }
+
+        .bg-yellow-darkest {
+          background-color: #fce2b3 !important;
+          color: #212936 !important;
+        }
+
+        .bg-yellow-lt {
+          color: #f59f00 !important;
+          background: #fdeccc !important;
+        }
+
+        .bg-lime-lightest {
+          background-color: #324343 !important;
+        }
+
+        .bg-lime-lighter {
+          background-color: #415d39 !important;
+        }
+
+        .bg-lime-light {
+          background-color: #5e9125 !important;
+        }
+
+        .bg-lime-dark {
+          background-color: #90c645 !important;
+        }
+
+        .bg-lime-darker {
+          background-color: #c7e3a2 !important;
+          color: #212936 !important;
+        }
+
+        .bg-lime-darkest {
+          background-color: #d5eab9 !important;
+          color: #212936 !important;
+        }
+
+        .bg-lime-lt {
+          color: #74b816 !important;
+          background: #e3f1d0 !important;
+        }
+
+        .bg-green-lightest {
+          background-color: #2b4348 !important;
+        }
+
+        .bg-green-lighter {
+          background-color: #2c5c47 !important;
+        }
+
+        .bg-green-light {
+          background-color: #2e8e45 !important;
+        }
+
+        .bg-green-dark {
+          background-color: #59c269 !important;
+        }
+
+        .bg-green-darker {
+          background-color: #ace1b4 !important;
+          color: #212936 !important;
+        }
+
+        .bg-green-darkest {
+          background-color: #c1e8c7 !important;
+          color: #212936 !important;
+        }
+
+        .bg-green-lt {
+          color: #2fb344 !important;
+          background: #d5f0da !important;
+        }
+
+        .bg-teal-lightest {
+          background-color: #28414d !important;
+        }
+
+        .bg-teal-lighter {
+          background-color: #225856 !important;
+        }
+
+        .bg-teal-light {
+          background-color: #15846a !important;
+        }
+
+        .bg-teal-dark {
+          background-color: #3db893 !important;
+        }
+
+        .bg-teal-darker {
+          background-color: #9edbc9 !important;
+          color: #212936 !important;
+        }
+
+        .bg-teal-darkest {
+          background-color: #b6e4d7 !important;
+          color: #212936 !important;
+        }
+
+        .bg-teal-lt {
+          color: #0ca678 !important;
+          background: #ceede4 !important;
+        }
+
+        .bg-cyan-lightest {
+          background-color: #294153 !important;
+        }
+
+        .bg-cyan-lighter {
+          background-color: #25566a !important;
+        }
+
+        .bg-cyan-light {
+          background-color: #1d8296 !important;
+        }
+
+        .bg-cyan-dark {
+          background-color: #45b5c6 !important;
+        }
+
+        .bg-cyan-darker {
+          background-color: #a2dae3 !important;
+          color: #212936 !important;
+        }
+
+        .bg-cyan-darkest {
+          background-color: #b9e3ea !important;
+          color: #212936 !important;
+        }
+
+        .bg-cyan-lt {
+          color: #17a2b8 !important;
+          background: #d1ecf1 !important;
+        }
+
+        .bg-gray-lightest {
+          background-color: #313c4e !important;
+        }
+
+        .bg-gray-lighter {
+          background-color: #3d4859 !important;
+        }
+
+        .bg-gray-light {
+          background-color: #546171 !important;
+        }
+
+        .bg-gray-dark {
+          background-color: #858f9b !important;
+        }
+
+        .bg-gray-darker {
+          background-color: #c2c7cd !important;
+          color: #212936 !important;
+        }
+
+        .bg-gray-darkest {
+          background-color: #d1d5da !important;
+          color: #212936 !important;
+        }
+
+        .bg-gray-lt {
+          color: #667382 !important;
+          background: #e0e3e6 !important;
+        }
+
+        .bg-white-lightest {
+          background-color: #404a5a !important;
+        }
+
+        .bg-white-lighter {
+          background-color: #6b727f !important;
+        }
+
+        .bg-white-light {
+          background-color: #bfc3c8 !important;
+        }
+
+        .bg-white-dark {
+          background-color: white !important;
+        }
+
+        .bg-white-darker {
+          background-color: white !important;
+          color: #212936 !important;
+        }
+
+        .bg-white-darkest {
+          background-color: white !important;
+          color: #212936 !important;
+        }
+
+        .bg-white-lt {
+          color: #ffffff !important;
+          background: white !important;
+        }
+
+        code {
+          background-color: #354258 !important;
+          color: #ffffff !important;
+        }
+
+        pre {
+          background-color: #354258 !important;
+          color: #ffffff !important;
+        }
+
+        .table-pre td {
+          background-color: #354258 !important;
+          color: #ffffff !important;
+        }
+
+        .table-pre-line {
+          background-color: #354258 !important;
+          color: #ffffff !important;
+        }
+
+        .table-pre .table-pre-line-highlight-red td {
+          background-color: #813841 !important;
+        }
+
+        .table-pre .table-pre-line-highlight-red td pre {
+          background-color: transparent !important;
+          color: #ffffff !important;
+        }
+
+        .img-dark {
+          display: inline-block !important;
+        }
+
+        .img-light {
+          display: none !important;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <div
-      style="
-        max-width: 600px;
-        margin: 30px auto;
-        background-color: white;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      ">
-      <h1 style="color: #222; text-align: center">Hey, {{name}}!</h1>
-      <p style="color: #222; line-height: 1.6; text-align: center">
-        Verify your new email by clicking the link below.
-      </p>
-      <div
+
+  <body
+    class="bg-body"
+    style="
+      font-size: 15px;
+      line-height: 160%;
+      color: #4b5563;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco,
+        Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    "
+    bgcolor="#f9fafb">
+    <center>
+      <table
+        class="main bg-body"
+        width="100%"
+        cellspacing="0"
+        cellpadding="0"
+        role="presentation"
         style="
-          display: block;
+          font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco,
+            Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+          border-collapse: collapse;
           width: 100%;
-          text-align: center;
-          margin-top: 20px;
-        ">
-        <a
-          href="{{clientUrl}}/users/verify-email/{{token}}"
-          style="
-            background-color: #3be8d4;
-            color: black;
-            padding: 12px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 16px;
-          "
-          >Verify New Email</a
-        >
-      </div>
-    </div>
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        "
+        bgcolor="#f9fafb">
+        <tr>
+          <td
+            align="center"
+            valign="top"
+            style="
+              font-family: Inter, -apple-system, BlinkMacSystemFont,
+                San Francisco, Segoe UI, Roboto, Helvetica Neue, Arial,
+                sans-serif;
+            ">
+            <!--[if (gte mso 9)|(IE)]>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td align="center" valign="top" width="640">
+				<![endif]-->
+
+            <table
+              class="wrap"
+              cellspacing="0"
+              cellpadding="0"
+              role="presentation"
+              style="
+                font-family: Inter, -apple-system, BlinkMacSystemFont,
+                  San Francisco, Segoe UI, Roboto, Helvetica Neue, Arial,
+                  sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                max-width: 640px;
+                text-align: left;
+              ">
+              <tr>
+                <td
+                  class="p-sm"
+                  style="
+                    font-family: Inter, -apple-system, BlinkMacSystemFont,
+                      San Francisco, Segoe UI, Roboto, Helvetica Neue, Arial,
+                      sans-serif;
+                    padding: 8px;
+                  ">
+                  <!-- HEADER -->
+
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="
+                      font-family: Inter, -apple-system, BlinkMacSystemFont,
+                        San Francisco, Segoe UI, Roboto, Helvetica Neue, Arial,
+                        sans-serif;
+                      border-collapse: collapse;
+                      width: 100%;
+                    ">
+                    <tr>
+                      <td
+                        class="py-lg"
+                        style="
+                          font-family: Inter, -apple-system, BlinkMacSystemFont,
+                            San Francisco, Segoe UI, Roboto, Helvetica Neue,
+                            Arial, sans-serif;
+                          padding-top: 24px;
+                          padding-bottom: 24px;
+                        "></td>
+                    </tr>
+                  </table>
+
+                  <!-- /HEADER -->
+
+                  <div class="main-content">
+                    <div
+                      class="box"
+                      style="
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+                        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+                        border: 1px solid #e8ebee;
+                      ">
+                      <table
+                        class="box-table"
+                        cellpadding="0"
+                        cellspacing="0"
+                        style="
+                          font-family: Inter, -apple-system, BlinkMacSystemFont,
+                            San Francisco, Segoe UI, Roboto, Helvetica Neue,
+                            Arial, sans-serif;
+                          border-collapse: collapse;
+                          width: 100%;
+                          border-radius: 8px;
+                        "
+                        bgcolor="#ffffff">
+                        <tr>
+                          <td
+                            style="
+                              font-family: Inter, -apple-system,
+                                BlinkMacSystemFont, San Francisco, Segoe UI,
+                                Roboto, Helvetica Neue, Arial, sans-serif;
+                            ">
+                            <table
+                              cellpadding="0"
+                              cellspacing="0"
+                              style="
+                                font-family: Inter, -apple-system,
+                                  BlinkMacSystemFont, San Francisco, Segoe UI,
+                                  Roboto, Helvetica Neue, Arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 100%;
+                              ">
+                              <tr>
+                                <td
+                                  class="content pb-0"
+                                  align="center"
+                                  style="
+                                    font-family: Inter, -apple-system,
+                                      BlinkMacSystemFont, San Francisco,
+                                      Segoe UI, Roboto, Helvetica Neue, Arial,
+                                      sans-serif;
+                                    padding: 48px 48px 0;
+                                  ">
+                                  <h1
+                                    class="text-center m-0 font-strong"
+                                    style="
+                                      font-family: Inter, -apple-system,
+                                        BlinkMacSystemFont, San Francisco,
+                                        Segoe UI, Roboto, Helvetica Neue, Arial,
+                                        sans-serif;
+                                      font-weight: 600;
+                                      color: #111827;
+                                      font-size: 30px;
+                                      line-height: 126%;
+                                      margin: 0;
+                                    "
+                                    align="center">
+                                    Hey, {{name}}!
+                                  </h1>
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td
+                                  class="content text-center pt-sm"
+                                  style="
+                                    font-family: Inter, -apple-system,
+                                      BlinkMacSystemFont, San Francisco,
+                                      Segoe UI, Roboto, Helvetica Neue, Arial,
+                                      sans-serif;
+                                    padding: 8px 48px 8px;
+                                  "
+                                  align="center">
+                                  Verify your email to update your email address
+                                  by clicking the link below.
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  class="content pt-sm"
+                                  style="
+                                    font-family: Inter, -apple-system,
+                                      BlinkMacSystemFont, San Francisco,
+                                      Segoe UI, Roboto, Helvetica Neue, Arial,
+                                      sans-serif;
+                                    padding: 8px 48px 48px;
+                                  ">
+                                  <!-- BUTTON -->
+                                  <table
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                    role="presentation"
+                                    style="
+                                      font-family: Inter, -apple-system,
+                                        BlinkMacSystemFont, San Francisco,
+                                        Segoe UI, Roboto, Helvetica Neue, Arial,
+                                        sans-serif;
+                                      border-collapse: collapse;
+                                      width: 100%;
+                                    ">
+                                    <tr>
+                                      <td
+                                        align="center"
+                                        style="
+                                          font-family: Inter, -apple-system,
+                                            BlinkMacSystemFont, San Francisco,
+                                            Segoe UI, Roboto, Helvetica Neue,
+                                            Arial, sans-serif;
+                                        ">
+                                        <table
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          border="0"
+                                          class="bg-blue rounded-lg w-auto"
+                                          role="presentation"
+                                          style="
+                                            font-family: Inter, -apple-system,
+                                              BlinkMacSystemFont, San Francisco,
+                                              Segoe UI, Roboto, Helvetica Neue,
+                                              Arial, sans-serif;
+                                            border-collapse: separate;
+                                            width: auto;
+                                            color: #ffffff;
+                                            border-radius: 8px;
+                                          "
+                                          bgcolor="#066FD1">
+                                          <tr>
+                                            <td
+                                              align="center"
+                                              valign="top"
+                                              class="lh-1"
+                                              style="
+                                                font-family: Inter,
+                                                  -apple-system,
+                                                  BlinkMacSystemFont,
+                                                  San Francisco, Segoe UI,
+                                                  Roboto, Helvetica Neue, Arial,
+                                                  sans-serif;
+                                                line-height: 100%;
+                                              ">
+                                              <a
+                                                href="{{clientUrl}}/users/verify-email/{{token}}"
+                                                class="btn bg-blue border-blue"
+                                                style="
+                                                  color: #ffffff;
+                                                  text-decoration: none;
+                                                  white-space: nowrap;
+                                                  font-weight: 500;
+                                                  font-size: 16px;
+                                                  border-radius: 8px;
+                                                  line-height: 125%;
+                                                  display: block;
+                                                  background-color: #222;
+                                                  padding: 12px 32px;
+                                                  border: 1px solid #222;
+                                                ">
+                                                <span
+                                                  class="btn-span"
+                                                  style="
+                                                    color: #ffffff;
+                                                    font-size: 14px;
+                                                    text-decoration: none;
+                                                    white-space: nowrap;
+                                                    font-weight: 500;
+                                                    line-height: 100%;
+                                                  "
+                                                  >Verify Email</span
+                                                >
+                                              </a>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <!-- /BUTTON -->
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- FOOTER -->
+                  <table
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="
+                      font-family: Inter, -apple-system, BlinkMacSystemFont,
+                        San Francisco, Segoe UI, Roboto, Helvetica Neue, Arial,
+                        sans-serif;
+                      border-collapse: collapse;
+                      width: 100%;
+                    ">
+                    <tr>
+                      <td
+                        class="py-xl"
+                        style="
+                          font-family: Inter, -apple-system, BlinkMacSystemFont,
+                            San Francisco, Segoe UI, Roboto, Helvetica Neue,
+                            Arial, sans-serif;
+                          padding-top: 48px;
+                          /* padding-bottom: 48px; */
+                        ">
+                        <!-- <table
+                          class="text-center text-muted"
+                          cellspacing="0"
+                          cellpadding="0"
+                          style="
+                            font-family: Inter, -apple-system,
+                              BlinkMacSystemFont, San Francisco, Segoe UI,
+                              Roboto, Helvetica Neue, Arial, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                            color: #667382;
+                            text-align: center;
+                          ">
+                          <tr>
+                            <td
+                              class="pt-md"
+                              style="
+                                font-family: Inter, -apple-system,
+                                  BlinkMacSystemFont, San Francisco, Segoe UI,
+                                  Roboto, Helvetica Neue, Arial, sans-serif;
+                                padding-top: 16px;
+                              ">
+                              If you have any questions, feel free to message us
+                              at
+                              <a
+                                href="https://tabler.io/emails?utm_source=demo"
+                                style="color: #3be8d4; text-decoration: none"
+                                >hello@tabler.io</a
+                              >.
+                            </td>
+                          </tr>
+                        </table> -->
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- /FOOTER -->
+                </td>
+              </tr>
+            </table>
+
+            <!--[if (gte mso 9)|(IE)]>
+						</td>
+					</tr>
+				</table>
+				<![endif]-->
+          </td>
+        </tr>
+      </table>
+    </center>
   </body>
 </html>
