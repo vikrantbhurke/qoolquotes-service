@@ -9,33 +9,33 @@ import { UserError } from "../user.error";
 
 export default class UpdateUserDTO {
   @IsOptional()
-  profilepic: string;
+  profilepic?: string;
 
   @IsOptional()
   @IsAlpha(undefined, {
     message: UserError.Firstname,
   })
-  firstname: string;
+  firstname?: string;
 
   @IsOptional()
   @IsAlpha(undefined, {
     message: UserError.Lastname,
   })
-  lastname: string;
+  lastname?: string;
 
   @IsOptional()
   @IsEmail(undefined, {
     message: UserError.Email,
   })
-  email: string;
+  email?: string;
 
   @IsOptional()
   @IsStrongPassword(undefined, {
     message: UserError.Password,
   })
-  password: string;
+  password?: string;
 
   @IsOptional()
   @IsBoolean()
-  isVerified: boolean;
+  isVerified?: boolean;
 }

@@ -129,7 +129,7 @@ export class UserService {
     if (user.isVerified) throw new Error("Email already verified.");
     user.isVerified = true;
 
-    await this.updateUserById(user._id, user, null);
+    await this.updateUserById(user._id, { isVerified: true }, null);
 
     await this.userUtility.sendEmail(
       user.email,
