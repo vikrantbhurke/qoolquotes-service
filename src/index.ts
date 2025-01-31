@@ -8,10 +8,7 @@ import express, { Express } from "express";
 import { useExpressServer } from "routing-controllers";
 import { CustomErrorHandler } from "./global/middlewares";
 import { v2 as cloudinary } from "cloudinary";
-import {
-  UserController,
-  // UserUtility
-} from "./user";
+import { UserController } from "./user";
 import { QuoteController } from "./quote";
 import { QuoteLikerController } from "./quote-liker";
 import { PlaylistLikerController } from "./playlist-liker";
