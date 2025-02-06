@@ -207,6 +207,17 @@ export class QuoteController {
     }
   }
 
+  @Get("/todays")
+  async getTodaysQuote(@Res() response: Response) {
+    try {
+      const quote: Quote = await this.quoteService.getTodaysQuote();
+      const quoteDTO = this.quoteUtility.convertQuoteToQuoteDTO(quote);
+      return response.status(200).json(quoteDTO);
+    } catch (error: any) {
+      return response.status(500).send({ message: error.message });
+    }
+  }
+
   @Get("/:qid")
   async getQuoteById(@Param("qid") qid: string, @Res() response: Response) {
     try {

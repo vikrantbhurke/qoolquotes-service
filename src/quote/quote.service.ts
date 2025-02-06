@@ -1,10 +1,12 @@
 import { TopicService } from "../topic";
 import { AuthorService } from "../author";
+import { QuoteIdService } from "../quote-id";
 import { PlaylistService } from "../playlist";
 import { QuoteLikerService } from "../quote-liker";
+import { QuoteIndexService } from "../quote-index";
 import { DeletionTracker } from "../global/utilities";
-import { QuoteRepository, QuoteUtility } from "./index";
 import { PlaylistQuoteService } from "../playlist-quote";
+import { QuoteRepository, QuoteUtility } from "./index";
 import {
   ContentDTO,
   TopicIdDTO,
@@ -13,10 +15,12 @@ import {
   UpdateQuoteDTO,
   PlaylistIdDTO,
 } from "./dtos";
-// import allQuotes from "../../../data/allQuotes.json";
+// import newQuotes from "../../../data/q.json";
 
 export class QuoteService {
   quoteRepository: QuoteRepository;
+  quoteIndexService: QuoteIndexService;
+  quoteIdService: QuoteIdService;
   quoteUtility: QuoteUtility;
   topicService: TopicService;
   authorService: AuthorService;
@@ -31,6 +35,14 @@ export class QuoteService {
 
   setQuoteUtility(quoteUtility: QuoteUtility) {
     this.quoteUtility = quoteUtility;
+  }
+
+  setQuoteIndexService(quoteIndexService: QuoteIndexService) {
+    this.quoteIndexService = quoteIndexService;
+  }
+
+  setQuoteIdService(quoteIdService: QuoteIdService) {
+    this.quoteIdService = quoteIdService;
   }
 
   setTopicService(topicService: TopicService) {
@@ -58,7 +70,7 @@ export class QuoteService {
   }
 
   async createQuotes() {
-    // for (const createQuoteDTO of allQuotes) {
+    // for (const createQuoteDTO of newQuotes) {
     //   await this.createQuote(createQuoteDTO);
     // }
   }
@@ -176,6 +188,16 @@ export class QuoteService {
       ...playlistQuotesPage,
       content: quotes,
     };
+  }
+
+  async getTodaysQuote() {
+    const quoteIndex = await this.quoteIndexService.getQuoteIndex();
+    const quoteId = await this.quoteIdService.getQuoteIdByIndex(
+      quoteIndex.index
+    );
+
+    if (!quoteId) throw new Error("Quote not found.");
+    return await this.getQuoteById(quoteId.qid);
   }
 
   async getQuoteById(qid: string) {

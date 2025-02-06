@@ -1,9 +1,9 @@
-import nodemailer from "nodemailer";
 import "reflect-metadata";
 import dotenv from "dotenv";
+import cors from "cors";
+import nodemailer from "nodemailer";
 import cookieParser from "cookie-parser";
 import connectDB from "./global/configurations/db.config";
-import cors from "cors";
 import express, { Express } from "express";
 import { useExpressServer } from "routing-controllers";
 import { CustomErrorHandler } from "./global/middlewares";

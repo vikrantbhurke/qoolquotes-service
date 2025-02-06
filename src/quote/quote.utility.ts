@@ -1,6 +1,7 @@
 import { CreateQuoteDTO, QuoteResponseDTO } from "./dtos";
 import { Quote } from "./quote.model";
 import { stopWordsEnglish } from "./processing/stopWordsEnglish";
+import { modifications } from "./processing/modifications";
 import { WordTokenizer } from "natural";
 import { lemmatizer } from "lemmatizer";
 import { Schema } from "mongoose";
@@ -40,7 +41,21 @@ export class QuoteUtility {
       return lemmatizer(token);
     });
 
-    const tokensWithoutStopWordsThree = lemmatizedTokens.filter(
+    const modifiedTokens = lemmatizedTokens.map((word: string) => {
+      for (let i = 0; i < modifications.length; i++)
+        if (word === modifications[i].old) word = modifications[i].new;
+      return word;
+    });
+
+    const seen = new Set();
+
+    const uniqueModifiedTokens = modifiedTokens.filter((token) => {
+      if (seen.has(token)) return false;
+      seen.add(token);
+      return true;
+    });
+
+    const tokensWithoutStopWordsThree = uniqueModifiedTokens.filter(
       (token) => !stopWordsEnglish.includes(token)
     );
 

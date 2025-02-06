@@ -8,9 +8,13 @@ import { topicService } from "../topic";
 import { playlistQuoteService } from "../playlist-quote";
 import { quoteLikerService } from "../quote-liker";
 import { playlistService } from "../playlist";
+import { quoteIndexService } from "../quote-index";
+import { quoteIdService } from "../quote-id";
 
 quoteService.setQuoteRepository(quoteRepository);
 quoteService.setQuoteUtility(quoteUtility);
+quoteService.setQuoteIndexService(quoteIndexService);
+quoteService.setQuoteIdService(quoteIdService);
 quoteService.setAuthorService(authorService);
 quoteService.setTopicService(topicService);
 quoteService.setPlaylistService(playlistService);
