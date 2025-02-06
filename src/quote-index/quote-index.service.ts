@@ -34,10 +34,11 @@ export class QuoteIndexService {
 export const quoteIndexService = new QuoteIndexService();
 
 // "0 0 * * *" // Every day at midnight
+// "0 6,12,18,0 * * *" // Every 6 hours
 // "*/10 * * * * *" // Every 10 seconds
 
 cron.schedule(
-  "0 0 * * *",
+  "0 6,12,18,0 * * *",
   () => {
     quoteIndexService.updateQuoteIndex();
   },
