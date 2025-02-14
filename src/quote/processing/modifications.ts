@@ -48,6 +48,10 @@ export const modifications = [
     new: "soldiers",
   },
   {
+    old: "crituscs",
+    new: "critics",
+  },
+  {
     old: "sire",
     new: "desire",
   },
