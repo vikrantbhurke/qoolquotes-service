@@ -67,7 +67,7 @@ export class PayPalController {
   async getSubscriptionDetails(_request: Request, response: Response) {
     try {
       const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-41AJ8DXFHWLJ`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B`,
         await this.getHeader()
       );
 
@@ -80,7 +80,7 @@ export class PayPalController {
   async suspendSubscription(_request: Request, response: Response) {
     try {
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-41AJ8DXFHWLJ/suspend`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/suspend`,
         { reason: "User requested suspension" },
         await this.getHeader()
       );
@@ -96,7 +96,7 @@ export class PayPalController {
   async activateSubscription(_request: Request, response: Response) {
     try {
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-41AJ8DXFHWLJ/activate`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/activate`,
         { reason: "User requested activation" },
         await this.getHeader()
       );
@@ -104,6 +104,22 @@ export class PayPalController {
       return response
         .status(200)
         .json({ message: "Subscription activated successfully." });
+    } catch (error: any) {
+      return response.status(500).json({ message: error.message });
+    }
+  }
+
+  async cancelSubscription(_request: Request, response: Response) {
+    try {
+      await axios.post(
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/cancel`,
+        { reason: "User requested cancellation" },
+        await this.getHeader()
+      );
+
+      return response
+        .status(200)
+        .json({ message: "Subscription canceled successfully." });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
     }
@@ -132,6 +148,11 @@ paypalControllerRouter.post(
 paypalControllerRouter.post(
   "/activate-subscription",
   paypalController.activateSubscription.bind(paypalController)
+);
+
+paypalControllerRouter.post(
+  "/cancel-subscription",
+  paypalController.cancelSubscription.bind(paypalController)
 );
 
 export default paypalControllerRouter;

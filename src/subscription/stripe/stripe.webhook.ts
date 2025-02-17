@@ -116,7 +116,7 @@ export class StripeWebhook {
         default:
       }
 
-      return response.status(200).json({ received: true });
+      return response.status(200).json({ message: "Webhook received." });
     } catch (err: any) {
       return response.status(500).json({ message: err.message });
     }
