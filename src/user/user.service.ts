@@ -7,6 +7,7 @@ import { UserRepository } from "./user.repository";
 import { UserUtility } from "./user.utility";
 import { DeletionTracker } from "../global/utilities";
 import {
+  EmailDTO,
   SignInUserDTO,
   SignUpUserDTO,
   UpdateUserDTO,
@@ -157,6 +158,12 @@ export class UserService {
     return user;
   }
 
+  async getUserByEmail(emailDTO: EmailDTO) {
+    const user = await this.userRepository.getUserByEmail(emailDTO);
+    if (!user) throw new Error("User not found.");
+    return user;
+  }
+
   async getUserById(uid: string) {
     const user = await this.userRepository.getUserById(uid);
     if (!user) throw new Error("User not found.");
@@ -172,8 +179,15 @@ export class UserService {
 
     if (!user) throw new Error("User not found.");
 
-    const { firstname, lastname, email, password, isVerified } =
-      updateUserByIdDTO;
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      subscriptionStatus,
+      customerId,
+      isVerified,
+    } = updateUserByIdDTO;
 
     if (email && email !== user.email) {
       const token = await this.generateToken({ uid, email });
@@ -195,6 +209,10 @@ export class UserService {
       firstname: firstname ? firstname : user.firstname,
       lastname: lastname ? lastname : user.lastname,
       email: user.email,
+      subscriptionStatus: subscriptionStatus
+        ? subscriptionStatus
+        : user.subscriptionStatus,
+      customerId: customerId ? customerId : user.customerId,
       hashedPassword: password
         ? await this.userUtility.encryptPassword(password)
         : user.hashedPassword,
@@ -217,6 +235,45 @@ export class UserService {
     const user = await this.userRepository.updateUserById(uid, { email });
     if (!user) throw new Error("User not found.");
     return user;
+  }
+
+  async updateUserSubscriptionStatus(subscriptionDetails: any) {
+    const { subscriptionStatus, customerEmail } = subscriptionDetails;
+    const user = await this.userRepository.getUserByEmail({
+      email: customerEmail,
+    });
+
+    if (!user) throw new Error("User not found.");
+    console.log("updateUserSubscriptionStatus Before", user.subscriptionStatus);
+    user.subscriptionStatus = subscriptionStatus || user.subscriptionStatus;
+    console.log("updateUserSubscriptionStatus After", user.subscriptionStatus);
+    return await this.userRepository.updateUserById(user._id, user);
+  }
+
+  async addUserCustomerId(userDetails: any) {
+    const { customerId, customerEmail } = userDetails;
+    const user = await this.userRepository.getUserByEmail({
+      email: customerEmail,
+    });
+
+    if (!user) throw new Error("User not found.");
+    console.log("addUserCustomerId Before", user.customerId);
+    user.customerId = customerId;
+    console.log("addUserCustomerId After", user.customerId);
+    return await this.userRepository.updateUserById(user._id, user);
+  }
+
+  async removeUserCustomerId(userDetails: any) {
+    const { customerEmail } = userDetails;
+    const user = await this.userRepository.getUserByEmail({
+      email: customerEmail,
+    });
+
+    if (!user) throw new Error("User not found.");
+    console.log("removeUserCustomerId Before", user.customerId);
+    user.customerId = "none";
+    console.log("removeUserCustomerId After ", user.customerId);
+    return await this.userRepository.updateUserById(user._id, user);
   }
 
   async deleteProfilePicById(uid: string) {

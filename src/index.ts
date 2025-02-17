@@ -19,6 +19,12 @@ import { AuthorController } from "./author";
 import { TopicController } from "./topic";
 import { MessageController } from "./message";
 import { CitedQuoteController } from "./cited-quote";
+import {
+  stripeControllerRouter,
+  stripeWebhookRouter,
+  paypalControllerRouter,
+  paypalWebhookRouter,
+} from "./subscription";
 
 dotenv.config();
 
@@ -47,7 +53,13 @@ let app: Express = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// StripeWebhook & PayPalWebhook are registered separately and do NOT use express.json()
+app.use("/stripe/webhook", stripeWebhookRouter);
+app.use("/paypal/webhook", paypalWebhookRouter);
 app.use(express.json());
+app.use("/stripe", stripeControllerRouter);
+app.use("/paypal", paypalControllerRouter);
 
 useExpressServer(app, {
   controllers: [

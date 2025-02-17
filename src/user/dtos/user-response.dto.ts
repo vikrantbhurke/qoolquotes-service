@@ -7,4 +7,6 @@ export default class UserResponseDTO {
   lastname: string;
   username: string;
   email: string;
+  customerId: string;
+  subscriptionStatus: string;
 }

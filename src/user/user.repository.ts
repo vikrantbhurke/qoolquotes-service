@@ -21,6 +21,11 @@ export class UserRepository {
     return user;
   }
 
+  @getModelByField(User, {})
+  async getUserByEmail(emailDTO: EmailDTO, user?: any) {
+    return user;
+  }
+
   @checkModel(User)
   async checkUserByEmail(emailDTO: EmailDTO, exists?: any) {
     return exists;

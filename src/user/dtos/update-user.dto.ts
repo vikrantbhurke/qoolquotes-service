@@ -1,7 +1,9 @@
+import { SubscriptionStatus } from "./../enums/subscription-status.enum";
 import {
   IsAlpha,
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsOptional,
   IsStrongPassword,
 } from "class-validator";
@@ -34,6 +36,13 @@ export default class UpdateUserDTO {
     message: UserError.Password,
   })
   password?: string;
+
+  @IsOptional()
+  @IsEnum(SubscriptionStatus)
+  subscriptionStatus?: SubscriptionStatus;
+
+  @IsOptional()
+  customerId?: string;
 
   @IsOptional()
   @IsBoolean()

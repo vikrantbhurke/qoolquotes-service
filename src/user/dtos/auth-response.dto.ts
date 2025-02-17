@@ -7,6 +7,8 @@ export default class AuthResponseDTO {
   lastname: string;
   username: string;
   email: string;
+  customerId: string;
+  subscriptionStatus: string;
   token: string;
   role: string;
 }

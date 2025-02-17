@@ -20,7 +20,7 @@
   "homepage": "",
   "dependencies": {
     "@typegoose/typegoose": "^12.6.0",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cheerio": "^1.0.0",
     "class-transformer": "^0.5.1",
@@ -37,6 +37,7 @@
     "multer": "^1.4.5-lts.1",
     "natural": "^8.0.1",
     "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.15",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
