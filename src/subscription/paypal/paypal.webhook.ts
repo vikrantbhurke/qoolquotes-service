@@ -3,8 +3,9 @@ import express, { Request, Response } from "express";
 export class PayPalWebhook {
   async webhook(request: Request, response: Response) {
     try {
-      let event = request.body;
-      console.log(event);
+      const rawBody = request.body.toString(); // Convert Buffer to string
+      const data = JSON.parse(rawBody); // Parse string to JSON
+      console.log(data);
       return response.status(200).json({ message: "Webhook received." });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
