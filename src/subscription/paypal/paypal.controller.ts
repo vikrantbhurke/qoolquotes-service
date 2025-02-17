@@ -67,7 +67,7 @@ export class PayPalController {
   async getSubscriptionDetails(_request: Request, response: Response) {
     try {
       const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-PL1RETU1GWKN`,
         await this.getHeader()
       );
 
@@ -80,7 +80,7 @@ export class PayPalController {
   async suspendSubscription(_request: Request, response: Response) {
     try {
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/suspend`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-PL1RETU1GWKN/suspend`,
         { reason: "User requested suspension" },
         await this.getHeader()
       );
@@ -96,7 +96,7 @@ export class PayPalController {
   async activateSubscription(_request: Request, response: Response) {
     try {
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/activate`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-PL1RETU1GWKN/activate`,
         { reason: "User requested activation" },
         await this.getHeader()
       );
@@ -112,7 +112,7 @@ export class PayPalController {
   async cancelSubscription(_request: Request, response: Response) {
     try {
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-70R83XDX6T6B/cancel`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-PL1RETU1GWKN/cancel`,
         { reason: "User requested cancellation" },
         await this.getHeader()
       );

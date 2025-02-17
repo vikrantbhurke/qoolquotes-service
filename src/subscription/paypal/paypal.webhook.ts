@@ -5,43 +5,15 @@ import axios from "axios";
 export class PayPalWebhook {
   async webhook(request: Request, response: Response) {
     try {
-      const PAYPAL_WEBHOOK_ID = process.env.PAYPAL_WEBHOOK_ID;
+      const rawBody = JSON.stringify(request.body);
+      const event = JSON.parse(rawBody);
 
-      const transmissionId = request.headers[
-        "paypal-transmission-id"
-      ] as string;
-
-      const transmissionTime = request.headers[
-        "paypal-transmission-time"
-      ] as string;
-
-      const certUrl = request.headers["paypal-cert-url"] as string;
-      const authAlgo = request.headers["paypal-auth-algo"] as string;
-      const transmissionSig = request.headers[
-        "paypal-transmission-sig"
-      ] as string;
-
-      const webhookEventBody = JSON.stringify(request.body);
-
-      // Fetch PayPal's public certificate
-      const { data: publicCert } = await axios.get(certUrl);
-
-      // Generate expected signature
-      const verifier = crypto.createVerify(authAlgo);
-
-      verifier.update(
-        `${transmissionId}|${transmissionTime}|${PAYPAL_WEBHOOK_ID}|${webhookEventBody}`
+      console.log(
+        "PayPal Webhook:",
+        event.event_type,
+        event.resource.id,
+        event.resource.status
       );
-      const isValid = verifier.verify(publicCert, transmissionSig, "base64");
-
-      if (!isValid) {
-        return response
-          .status(400)
-          .json({ message: "Invalid PayPal signature." });
-      }
-
-      const event = JSON.parse(webhookEventBody);
-      console.log("Verified PayPal webhook:", event);
 
       switch (event.event_type) {
         case "BILLING.SUBSCRIPTION.CREATED":
