@@ -11,6 +11,8 @@ export class PayPalWebhook {
       console.log(
         "Event Type:",
         event.event_type,
+        "Email Id:",
+        event.resource.subscriber.email_address,
         "Subscription Id:",
         event.resource.id,
         "Subscription Status:",
