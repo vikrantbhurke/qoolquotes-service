@@ -1,11 +1,10 @@
 import express, { Request, Response } from "express";
-import crypto from "crypto";
-import axios from "axios";
 
 export class PayPalWebhook {
   async webhook(request: Request, response: Response) {
     try {
-      const rawBody = JSON.stringify(request.body);
+      //   const rawBody = JSON.stringify(request.body);
+      const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
 
       console.log(
