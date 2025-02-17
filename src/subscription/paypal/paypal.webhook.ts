@@ -21,7 +21,7 @@ export class PayPalWebhook {
         "paypal-transmission-sig"
       ] as string;
 
-      const webhookEventBody = JSON.stringify(request.body);
+      const webhookEventBody = request.body.toString();
 
       // Fetch PayPal's public certificate
       const { data: publicCert } = await axios.get(certUrl);
@@ -41,7 +41,13 @@ export class PayPalWebhook {
       }
 
       const event = JSON.parse(webhookEventBody);
-      console.log("Verified PayPal webhook:", event);
+
+      console.log(
+        "Verified PayPal webhook:",
+        event.event_type,
+        event.resource.id,
+        event.resource.status
+      );
 
       switch (event.event_type) {
         case "BILLING.SUBSCRIPTION.CREATED":
