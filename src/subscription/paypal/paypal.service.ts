@@ -1,6 +1,6 @@
 import { UserService } from "../index";
 
-export class StripeService {
+export class PayPalService {
   userService: UserService;
 
   setUserService(userService: UserService) {
@@ -8,16 +8,14 @@ export class StripeService {
   }
 
   async updateUserSubscriptionStatus(subscriptionDetails: any) {
-    await this.userService.updateUserSubscriptionStatus(subscriptionDetails);
+    // Update user subscription status
   }
-
   async addUserCustomerId(userDetails: any) {
-    await this.userService.addUserCustomerId(userDetails);
+    // Add user customer ID
   }
-
   async removeUserCustomerId(userDetails: any) {
-    await this.userService.removeUserCustomerId(userDetails);
+    // Remove user customer ID
   }
 }
 
-export const stripeService = new StripeService();
+export const paypalService = new PayPalService();

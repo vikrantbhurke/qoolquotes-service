@@ -6,10 +6,14 @@ export class PayPalWebhook {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
 
+      console.log("Event", event);
+
       console.log(
-        "Verified PayPal webhook:",
+        "Event Type:",
         event.event_type,
+        "Subscription Id:",
         event.resource.id,
+        "Subscription Status:",
         event.resource.status
       );
 
