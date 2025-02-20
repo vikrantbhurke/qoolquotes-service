@@ -25,7 +25,7 @@ export class PayPalWebhook {
       console.log("Event Id", event.resource.id);
       console.log("Event Type", event.event_type);
       console.log("Event Status", event.resource.status);
-      console.log("Event Email", event.resource.email_address);
+      console.log("Event Email", event.resource.subscriber.email_address);
 
       await this.paypalService.updateUserByEmail(emailDTO, updateUserDTO);
       return response.status(200).json({ message: "Webhook received." });
