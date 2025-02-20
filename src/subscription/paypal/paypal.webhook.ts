@@ -29,9 +29,9 @@ export class PayPalWebhook {
 
       await this.paypalService.updateUserByEmail(emailDTO, updateUserDTO);
       console.log("User updated successfully.");
-      return response.status(200).json({ message: "Webhook received." });
+      return response.status(200).send({ message: "Webhook received." });
     } catch (error: any) {
-      return response.status(500).json({ message: error.message });
+      return response.status(500).send({ message: error.message });
     }
   }
 }
