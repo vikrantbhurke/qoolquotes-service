@@ -13,6 +13,7 @@ export class PayPalWebhook {
     try {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
+      console.log("Event", event);
       const emailDTO = { email: event.resource.subscriber.email_address };
 
       const updateUserDTO = {
@@ -22,7 +23,6 @@ export class PayPalWebhook {
         ) as any,
       };
 
-      console.log("Event", event);
       // console.log("Event Id", event.resource.id);
       // console.log("Event Type", event.event_type);
       // console.log("Event Status", event.resource.status);
