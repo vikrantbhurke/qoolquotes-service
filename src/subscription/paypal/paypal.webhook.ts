@@ -31,6 +31,7 @@ export class PayPalWebhook {
       // console.log("User updated successfully.");
       return response.status(200).json({ message: "Webhook received." });
     } catch (error: any) {
+      console.log("Error", error);
       return response.status(500).json({ message: error.message });
     }
   }
