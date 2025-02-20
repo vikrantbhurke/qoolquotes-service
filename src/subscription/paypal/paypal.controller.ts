@@ -24,6 +24,7 @@ export class PayPalController {
 
   async getHeader() {
     const accessToken = await this.getPayPalAccessToken();
+
     return {
       headers: {
         Authorization: `Bearer ${accessToken}`,

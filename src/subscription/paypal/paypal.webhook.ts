@@ -11,8 +11,10 @@ export class PayPalWebhook {
 
   async webhook(request: Request, response: Response) {
     try {
-      const rawBody = request.body.toString();
-      const event = JSON.parse(rawBody);
+      // const rawBody = request.body.toString();
+      // const event = JSON.parse(rawBody);
+
+      const event = request.body;
       const emailDTO = { email: event.resource.subscriber.email_address };
 
       const updateUserDTO = {
