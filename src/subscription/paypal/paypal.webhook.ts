@@ -1,45 +1,30 @@
+import { subscriptionUtility } from "../subscription.utility";
+import { PayPalService, paypalService } from "./paypal.service";
 import express, { Request, Response } from "express";
 
 export class PayPalWebhook {
+  paypalService: PayPalService;
+
+  constructor() {
+    this.paypalService = paypalService;
+  }
+
   async webhook(request: Request, response: Response) {
     try {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
+      const emailDTO = { email: event.resource.subscriber.email_address };
+
+      const updateUserDTO = {
+        subscriptionId: event.resource.id,
+        subscriptionStatus: subscriptionUtility.getSubscriptionStatus(
+          event.resource.status
+        ) as any,
+      };
 
       console.log("Event", event);
 
-      console.log(
-        "Event Type:",
-        event.event_type,
-        "Email Id:",
-        event.resource.subscriber.email_address,
-        "Subscription Id:",
-        event.resource.id,
-        "Subscription Status:",
-        event.resource.status
-      );
-
-      switch (event.event_type) {
-        case "BILLING.SUBSCRIPTION.CREATED":
-          // event.resource.id is the subscription ID
-          // event.resource.status is the subscription status (e.g. APPROVAL_PENDING)
-          break;
-        case "BILLING.SUBSCRIPTION.ACTIVATED":
-          // event.resource.id is the subscription ID
-          // event.resource.status is the subscription status (e.g. ACTIVE)
-          break;
-        case "BILLING.SUBSCRIPTION.SUSPENDED":
-          // event.resource.id is the subscription ID
-          // event.resource.status is the subscription status (e.g. SUSPENDED)
-          break;
-        case "BILLING.SUBSCRIPTION.CANCELLED":
-          // event.resource.id is the subscription ID
-          // event.resource.status is the subscription status (e.g. CANCELLED)
-          break;
-        default:
-          break;
-      }
-
+      await this.paypalService.updateUserByEmail(emailDTO, updateUserDTO);
       return response.status(200).json({ message: "Webhook received." });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

@@ -237,6 +237,12 @@ export class UserService {
     return user;
   }
 
+  async updateUserByEmail(emailDTO: EmailDTO, updateUserDTO: UpdateUserDTO) {
+    const user = await this.userRepository.getUserByEmail(emailDTO);
+    if (!user) throw new Error("User not found.");
+    return await this.userRepository.updateUserById(user._id, updateUserDTO);
+  }
+
   async updateUserSubscriptionStatus(subscriptionDetails: any) {
     const { subscriptionStatus, customerEmail } = subscriptionDetails;
     const user = await this.userRepository.getUserByEmail({

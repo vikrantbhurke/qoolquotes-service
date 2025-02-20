@@ -42,6 +42,9 @@ export default class UpdateUserDTO {
   subscriptionStatus?: SubscriptionStatus;
 
   @IsOptional()
+  subscriptionId?: string;
+
+  @IsOptional()
   customerId?: string;
 
   @IsOptional()

@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { StripeService, stripeService } from "../index";
 import { stripe } from "../../index";
+import { subscriptionUtility } from "../subscription.utility";
 
 export class StripeWebhook {
   stripeService: StripeService;
@@ -13,7 +14,7 @@ export class StripeWebhook {
     try {
       let event = request.body;
 
-      //  If you are testing with the CLI, find the secret by running `stripe listen` or `stripe listen --forward-to localhost:3000/webhook`
+      // If you are testing with the CLI, find the secret by running `stripe listen` or `stripe listen --forward-to localhost:3000/stripe/webhook`
       // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
       // at https://dashboard.stripe.com/webhooks
       const endpointSecret = process.env.STRIPE_WEBHOOK_SIGNING_SECRET;
@@ -29,8 +30,11 @@ export class StripeWebhook {
             signature,
             endpointSecret
           );
-        } catch (err: any) {
-          console.log(`⚠️ Webhook signature verification failed.`, err.message);
+        } catch (error: any) {
+          console.log(
+            `⚠️ Webhook signature verification failed.`,
+            error.message
+          );
           return response.sendStatus(400);
         }
       }
@@ -39,82 +43,97 @@ export class StripeWebhook {
         event.data.object.customer
       );
 
+      // const emailDTO = {
+      //   email: customer.email,
+      // };
+
+      // const updateUserDTO = {
+      //   subscriptionId: event.data.object.subscription,
+      //   subscriptionStatus: subscriptionUtility.getSubscriptionStatus(
+      //     event.data.object.status
+      //   ) as any,
+      // };
+
+      // await this.stripeService.updateUserByEmail(emailDTO, updateUserDTO);
+
       let details = {
         subscriptionStatus: event.data.object.status,
-        customerEmail: customer.email,
+        email: customer.email,
       };
 
       let addUserDetails = {
         customerId: event.data.object.customer,
-        customerEmail: customer.email,
+        email: customer.email,
       };
 
       let removeUserDetails = {
-        customerEmail: customer.email,
+        email: customer.email,
       };
 
-      switch (event.type) {
-        case "customer.subscription.created":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          await this.stripeService.addUserCustomerId(addUserDetails);
-          console.log(
-            "customer.subscription.created",
-            addUserDetails.customerId,
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.deleted":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          await this.stripeService.removeUserCustomerId(removeUserDetails);
-          console.log(
-            "customer.subscription.deleted",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.paused":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.paused",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.pending_update_applied":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.pending_update_applied",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.pending_update_expired":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.pending_update_expired",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.resumed":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.resumed",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.trial_will_end":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.trial_will_end",
-            details.subscriptionStatus
-          );
-          break;
-        case "customer.subscription.updated":
-          await this.stripeService.updateUserSubscriptionStatus(details);
-          console.log(
-            "customer.subscription.updated",
-            details.subscriptionStatus
-          );
-          break;
-        default:
-      }
+      console.log("Details Are", event, event.type, event.data.object.status);
+
+      // switch (event.type) {
+      //   case "customer.subscription.created":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     await this.stripeService.addUserCustomerId(addUserDetails);
+      //     console.log(
+      //       "customer.subscription.created",
+      //       addUserDetails.customerId,
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.deleted":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     await this.stripeService.removeUserCustomerId(removeUserDetails);
+      //     console.log(
+      //       "customer.subscription.deleted",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.paused":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.paused",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.pending_update_applied":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.pending_update_applied",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.pending_update_expired":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.pending_update_expired",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.resumed":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.resumed",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.trial_will_end":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.trial_will_end",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   case "customer.subscription.updated":
+      //     await this.stripeService.updateUserSubscriptionStatus(details);
+      //     console.log(
+      //       "customer.subscription.updated",
+      //       details.subscriptionStatus
+      //     );
+      //     break;
+      //   default:
+      // }
 
       return response.status(200).json({ message: "Webhook received." });
     } catch (err: any) {

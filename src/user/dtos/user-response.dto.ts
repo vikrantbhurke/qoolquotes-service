@@ -9,4 +9,5 @@ export default class UserResponseDTO {
   email: string;
   customerId: string;
   subscriptionStatus: string;
+  subscriptionId: string;
 }

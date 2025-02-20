@@ -1,3 +1,4 @@
+import { EmailDTO, UpdateUserDTO } from "../../user/dtos";
 import { UserService } from "../index";
 
 export class PayPalService {
@@ -7,14 +8,8 @@ export class PayPalService {
     this.userService = userService;
   }
 
-  async updateUserSubscriptionStatus(subscriptionDetails: any) {
-    // Update user subscription status
-  }
-  async addUserCustomerId(userDetails: any) {
-    // Add user customer ID
-  }
-  async removeUserCustomerId(userDetails: any) {
-    // Remove user customer ID
+  async updateUserByEmail(emailDTO: EmailDTO, updateUserDTO: UpdateUserDTO) {
+    return await this.userService.updateUserByEmail(emailDTO, updateUserDTO);
   }
 }
 

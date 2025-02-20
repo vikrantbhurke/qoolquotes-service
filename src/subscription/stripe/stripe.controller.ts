@@ -32,7 +32,10 @@ export class StripeController {
 
   async createPortalSession(request: Request, response: Response) {
     try {
-      const { customerId } = request.body;
+      // const { customerId } = request.body;
+      const { subscriptionId } = request.body;
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+      const customerId = subscription.customer as string;
 
       const portalSession = await stripe.billingPortal.sessions.create({
         customer: customerId,

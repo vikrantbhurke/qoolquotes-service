@@ -9,6 +9,7 @@ export default class AuthResponseDTO {
   email: string;
   customerId: string;
   subscriptionStatus: string;
+  subscriptionId: string;
   token: string;
   role: string;
 }

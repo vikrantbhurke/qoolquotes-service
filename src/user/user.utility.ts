@@ -21,6 +21,7 @@ export class UserUtility {
     userDTO.username = user.username;
     userDTO.email = user.email;
     userDTO.customerId = user.customerId;
+    userDTO.subscriptionId = user.subscriptionId;
     userDTO.subscriptionStatus = user.subscriptionStatus as SubscriptionStatus;
     return userDTO;
   }
@@ -34,6 +35,7 @@ export class UserUtility {
     authDTO.username = user.username;
     authDTO.email = user.email;
     authDTO.customerId = user.customerId;
+    authDTO.subscriptionId = user.subscriptionId;
     authDTO.subscriptionStatus = user.subscriptionStatus;
     authDTO.token = token;
     authDTO.role = user.role;

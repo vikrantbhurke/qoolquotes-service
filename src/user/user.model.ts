@@ -34,6 +34,9 @@ export class User extends Document {
   subscriptionStatus: SubscriptionStatus;
 
   @prop({ type: String, default: "none" })
+  subscriptionId: string;
+
+  @prop({ type: String, default: "none" })
   customerId: string;
 
   @prop({ type: Boolean, default: false })
