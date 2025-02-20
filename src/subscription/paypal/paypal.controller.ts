@@ -1,7 +1,14 @@
 import express, { Request, Response } from "express";
+import { PayPalService, paypalService } from "./paypal.service";
 import axios from "axios";
 
 export class PayPalController {
+  paypalService: PayPalService;
+
+  constructor() {
+    this.paypalService = paypalService;
+  }
+
   // Utility method to get PayPal access token
   async getPayPalAccessToken() {
     const auth = Buffer.from(
@@ -65,10 +72,17 @@ export class PayPalController {
     }
   }
 
-  async getSubscriptionDetails(_request: Request, response: Response) {
+  async getSubscriptionDetails(request: Request, response: Response) {
     try {
+      const user = await this.paypalService.getUserByEmail({
+        email: request.body.email,
+      });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
       const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-JU8H581FMRUT`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
         await this.getHeader()
       );
 
@@ -78,10 +92,17 @@ export class PayPalController {
     }
   }
 
-  async suspendSubscription(_request: Request, response: Response) {
+  async suspendSubscription(request: Request, response: Response) {
     try {
+      const user = await this.paypalService.getUserByEmail({
+        email: request.body.email,
+      });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-JU8H581FMRUT/suspend`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/suspend`,
         { reason: "User requested suspension" },
         await this.getHeader()
       );
@@ -94,10 +115,17 @@ export class PayPalController {
     }
   }
 
-  async activateSubscription(_request: Request, response: Response) {
+  async activateSubscription(request: Request, response: Response) {
     try {
+      const user = await this.paypalService.getUserByEmail({
+        email: request.body.email,
+      });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-JU8H581FMRUT/activate`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/activate`,
         { reason: "User requested activation" },
         await this.getHeader()
       );
@@ -110,10 +138,17 @@ export class PayPalController {
     }
   }
 
-  async cancelSubscription(_request: Request, response: Response) {
+  async cancelSubscription(request: Request, response: Response) {
     try {
+      const user = await this.paypalService.getUserByEmail({
+        email: request.body.email,
+      });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/I-JU8H581FMRUT/cancel`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/cancel`,
         { reason: "User requested cancellation" },
         await this.getHeader()
       );
