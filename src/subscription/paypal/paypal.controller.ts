@@ -29,6 +29,7 @@ export class PayPalController {
     return paypalResponse.data.access_token;
   }
 
+  // Utility method to get PayPal headers
   async getHeader() {
     const accessToken = await this.getPayPalAccessToken();
 
@@ -41,7 +42,7 @@ export class PayPalController {
     };
   }
 
-  async createSubscription(_request: Request, response: Response) {
+  async createSubscription(request: Request, response: Response) {
     try {
       const paypalResponse = await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions`,
@@ -55,8 +56,8 @@ export class PayPalController {
               payer_selected: "PAYPAL",
               payee_preferred: "IMMEDIATE_PAYMENT_REQUIRED",
             },
-            return_url: `${process.env.CLIENT_URL}/paypal/?success=true`,
-            cancel_url: `${process.env.CLIENT_URL}/paypal/?canceled=true`,
+            return_url: `${process.env.CLIENT_URL}/users/${request.body.userId}`,
+            cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}`,
           },
         },
         await this.getHeader()
@@ -67,6 +68,26 @@ export class PayPalController {
       ).href;
 
       return response.status(200).json({ approve_url });
+    } catch (error: any) {
+      return response.status(500).json({ message: error.message });
+    }
+  }
+
+  async getSubscription(request: Request, response: Response) {
+    try {
+      const user = await this.paypalService.getUserByEmail({
+        email: request.body.email,
+      });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
+      const paypalResponse = await axios.get(
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
+        await this.getHeader()
+      );
+
+      return response.status(200).json(paypalResponse.data);
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
     }
@@ -149,6 +170,11 @@ const paypalControllerRouter = express.Router();
 paypalControllerRouter.post(
   "/create-subscription",
   paypalController.createSubscription.bind(paypalController)
+);
+
+paypalControllerRouter.post(
+  "/get-subscription",
+  paypalController.getSubscription.bind(paypalController)
 );
 
 paypalControllerRouter.post(
