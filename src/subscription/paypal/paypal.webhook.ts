@@ -13,23 +13,29 @@ export class PayPalWebhook {
     try {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
-      const emailDTO = { email: event.resource.subscriber.email_address };
+      const subscriptionId = event.resource.id;
+      const eventType = event.event_type;
+      const subscriptionStatus = event.resource.status;
+      const email = event.resource.subscriber.email_address;
+
+      const emailDTO = { email };
 
       const updateUserDTO = {
-        subscriptionId: event.resource.id,
+        subscriptionId,
         subscriptionStatus: subscriptionUtility.getSubscriptionStatus(
-          event.resource.status
+          subscriptionStatus
         ) as any,
       };
 
-      console.log("Event Id", event.resource.id);
-      console.log("Event Type", event.event_type);
-      console.log("Event Status", event.resource.status);
-      console.log("Event Email", event.resource.subscriber.email_address);
+      console.log("Subscription Id", subscriptionId);
+      console.log("Event Type", eventType);
+      console.log("Subscription Status", subscriptionStatus);
+      console.log("Email Address", email);
 
       await this.paypalService.updateUserByEmail(emailDTO, updateUserDTO);
       return response.status(200).json({ message: "Webhook received." });
     } catch (error: any) {
+      console.log("Error", error);
       return response.status(500).json({ message: error.message });
     }
   }

@@ -72,26 +72,6 @@ export class PayPalController {
     }
   }
 
-  async getSubscriptionDetails(request: Request, response: Response) {
-    try {
-      const user = await this.paypalService.getUserByEmail({
-        email: request.body.email,
-      });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
-      const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
-        await this.getHeader()
-      );
-
-      return response.status(200).send(paypalResponse.data);
-    } catch (error: any) {
-      return response.status(500).json({ message: error.message });
-    }
-  }
-
   async suspendSubscription(request: Request, response: Response) {
     try {
       const user = await this.paypalService.getUserByEmail({
@@ -103,7 +83,7 @@ export class PayPalController {
 
       await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/suspend`,
-        { reason: "User requested suspension" },
+        { reason: "User requested suspension." },
         await this.getHeader()
       );
 
@@ -126,7 +106,7 @@ export class PayPalController {
 
       await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/activate`,
-        { reason: "User requested activation" },
+        { reason: "User requested activation." },
         await this.getHeader()
       );
 
@@ -149,7 +129,7 @@ export class PayPalController {
 
       await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/cancel`,
-        { reason: "User requested cancellation" },
+        { reason: "User requested cancellation." },
         await this.getHeader()
       );
 
@@ -169,11 +149,6 @@ const paypalControllerRouter = express.Router();
 paypalControllerRouter.post(
   "/create-subscription",
   paypalController.createSubscription.bind(paypalController)
-);
-
-paypalControllerRouter.get(
-  "/get-subscription",
-  paypalController.getSubscriptionDetails.bind(paypalController)
 );
 
 paypalControllerRouter.post(
