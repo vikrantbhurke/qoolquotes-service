@@ -1,3 +1,3 @@
-import { SubscriptionStatus } from "./subscription-status.enum";
+import { Status } from "./status.enum";
 
-export { SubscriptionStatus };
+export { Status };

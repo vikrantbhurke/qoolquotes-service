@@ -22,7 +22,7 @@ export class PayPalWebhook {
 
       const updateUserDTO = {
         subscriptionId,
-        subscriptionStatus: subscriptionUtility.getSubscriptionStatus(
+        subscriptionStatus: subscriptionUtility.getStatus(
           subscriptionStatus
         ) as any,
       };

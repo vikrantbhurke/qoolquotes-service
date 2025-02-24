@@ -82,6 +82,11 @@ export class PayPalController {
       if (!user)
         return response.status(404).json({ message: "User not found." });
 
+      if (user.subscriptionId === "none")
+        return response
+          .status(204)
+          .json({ message: "User has no active subscription." });
+
       const paypalResponse = await axios.get(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
         await this.getHeader()

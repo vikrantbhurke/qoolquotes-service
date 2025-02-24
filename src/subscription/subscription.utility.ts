@@ -1,22 +1,22 @@
-import { SubscriptionStatus } from "./enums";
+import { Status } from "./enums";
 
 export class SubscriptionUtility {
-  getSubscriptionStatus(subscriptionStatus: string) {
+  getStatus(status: string) {
     // PayPal
-    switch (subscriptionStatus) {
+    switch (status) {
       case "ACTIVE":
-        return SubscriptionStatus.Active;
+        return Status.Active;
       case "SUSPENDED":
-        return SubscriptionStatus.Suspended;
+        return Status.Suspended;
       case "CANCELLED":
-        return SubscriptionStatus.Canceled;
+        return Status.Canceled;
       case "EXPIRED":
-        return SubscriptionStatus.Expired;
+        return Status.Expired;
       // Stripe
       case "active":
-        return SubscriptionStatus.Active;
+        return Status.Active;
       default:
-        return SubscriptionStatus.Inactive;
+        return Status.Inactive;
     }
   }
 }

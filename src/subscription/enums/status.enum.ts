@@ -1,4 +1,4 @@
-export enum SubscriptionStatus {
+export enum Status {
   Inactive = "Inactive",
   Active = "Active",
   Suspended = "Suspended",
