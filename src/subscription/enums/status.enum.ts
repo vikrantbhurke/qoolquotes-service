@@ -1,7 +1,5 @@
 export enum Status {
-  Inactive = "Inactive",
   Active = "Active",
+  Inactive = "Inactive",
   Suspended = "Suspended",
-  Canceled = "Canceled",
-  Expired = "Expired",
 }

@@ -1,3 +1,5 @@
+import { Role } from "../../user/enums";
+import { Subscription } from "../enums";
 import { subscriptionUtility } from "../subscription.utility";
 import { PayPalService, paypalService } from "./paypal.service";
 import express, { Request, Response } from "express";
@@ -20,12 +22,45 @@ export class PayPalWebhook {
 
       const emailDTO = { email };
 
-      const updateUserDTO = {
-        subscriptionId,
-        subscriptionStatus: subscriptionUtility.getStatus(
-          subscriptionStatus
-        ) as any,
-      };
+      let updateUserDTO = {};
+
+      if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
+        updateUserDTO = {
+          role: Role.Subscriber,
+          subscription: Subscription.PayPal,
+          subscriptionId,
+          subscriptionStatus: subscriptionUtility.getStatus(
+            subscriptionStatus
+          ) as any,
+        };
+      }
+
+      if (eventType === "BILLING.SUBSCRIPTION.SUSPENDED") {
+        updateUserDTO = {
+          role: Role.Private,
+          subscription: Subscription.PayPal,
+          subscriptionId,
+          subscriptionStatus: subscriptionUtility.getStatus(
+            subscriptionStatus
+          ) as any,
+        };
+      }
+
+      if (
+        eventType === "BILLING.SUBSCRIPTION.CANCELLED" ||
+        eventType === "BILLING.SUBSCRIPTION.EXPIRED"
+      ) {
+        {
+          updateUserDTO = {
+            role: Role.Private,
+            subscription: Subscription.Free,
+            subscriptionId: "none",
+            subscriptionStatus: subscriptionUtility.getStatus(
+              subscriptionStatus
+            ) as any,
+          };
+        }
+      }
 
       console.log("Subscription Id", subscriptionId);
       console.log("Event Type", eventType);

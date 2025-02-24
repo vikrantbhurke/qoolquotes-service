@@ -9,9 +9,9 @@ export class SubscriptionUtility {
       case "SUSPENDED":
         return Status.Suspended;
       case "CANCELLED":
-        return Status.Canceled;
+        return Status.Inactive;
       case "EXPIRED":
-        return Status.Expired;
+        return Status.Inactive;
       // Stripe
       case "active":
         return Status.Active;

@@ -1,4 +1,3 @@
-import { SubscriptionStatus } from "./enums/subscription-status.enum";
 import bcrypt from "bcrypt";
 import { Schema } from "mongoose";
 import { User } from "./user.model";
@@ -10,6 +9,7 @@ import multer from "multer";
 import { transporter } from "../index";
 import fs from "fs";
 import path from "path";
+import { Status } from "../subscription/enums";
 
 export class UserUtility {
   convertUserToUserDTO(user: User): UserResponseDTO {
@@ -20,9 +20,9 @@ export class UserUtility {
     userDTO.lastname = user.lastname;
     userDTO.username = user.username;
     userDTO.email = user.email;
-    userDTO.customerId = user.customerId;
+    userDTO.subscription = user.subscription;
     userDTO.subscriptionId = user.subscriptionId;
-    userDTO.subscriptionStatus = user.subscriptionStatus as SubscriptionStatus;
+    userDTO.subscriptionStatus = user.subscriptionStatus as Status;
     return userDTO;
   }
 
@@ -34,7 +34,7 @@ export class UserUtility {
     authDTO.lastname = user.lastname;
     authDTO.username = user.username;
     authDTO.email = user.email;
-    authDTO.customerId = user.customerId;
+    authDTO.subscription = user.subscription;
     authDTO.subscriptionId = user.subscriptionId;
     authDTO.subscriptionStatus = user.subscriptionStatus;
     authDTO.token = token;

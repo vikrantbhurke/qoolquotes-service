@@ -1,6 +1,7 @@
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 import { Document } from "mongoose";
-import { Gender, Role, SubscriptionStatus } from "./enums";
+import { Gender, Role } from "./enums";
+import { Status, Subscription } from "../subscription/enums";
 
 @modelOptions({
   schemaOptions: { collection: "Users", timestamps: true },
@@ -30,14 +31,14 @@ export class User extends Document {
   @prop({ enum: Gender, required: true })
   gender: Gender;
 
-  @prop({ enum: SubscriptionStatus, default: SubscriptionStatus.Inactive })
-  subscriptionStatus: SubscriptionStatus;
+  @prop({ enum: Status, default: Status.Inactive })
+  subscriptionStatus: Status;
 
   @prop({ type: String, default: "none" })
   subscriptionId: string;
 
-  @prop({ type: String, default: "none" })
-  customerId: string;
+  @prop({ enum: Subscription, default: Subscription.Free })
+  subscription: Subscription;
 
   @prop({ type: Boolean, default: false })
   isVerified: boolean;

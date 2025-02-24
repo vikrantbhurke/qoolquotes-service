@@ -1,4 +1,3 @@
-import { SubscriptionStatus } from "./../enums/subscription-status.enum";
 import {
   IsAlpha,
   IsBoolean,
@@ -8,6 +7,7 @@ import {
   IsStrongPassword,
 } from "class-validator";
 import { UserError } from "../user.error";
+import { Status, Subscription } from "../../subscription/enums";
 
 export default class UpdateUserDTO {
   @IsOptional()
@@ -38,14 +38,15 @@ export default class UpdateUserDTO {
   password?: string;
 
   @IsOptional()
-  @IsEnum(SubscriptionStatus)
-  subscriptionStatus?: SubscriptionStatus;
+  @IsEnum(Status)
+  subscriptionStatus?: Status;
 
   @IsOptional()
   subscriptionId?: string;
 
   @IsOptional()
-  customerId?: string;
+  @IsEnum(Subscription)
+  subscription?: Subscription;
 
   @IsOptional()
   @IsBoolean()
