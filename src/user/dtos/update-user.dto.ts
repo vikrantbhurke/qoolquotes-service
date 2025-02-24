@@ -38,17 +38,6 @@ export default class UpdateUserDTO {
   password?: string;
 
   @IsOptional()
-  @IsEnum(Status)
-  subscriptionStatus?: Status;
-
-  @IsOptional()
-  subscriptionId?: string;
-
-  @IsOptional()
-  @IsEnum(Subscription)
-  subscription?: Subscription;
-
-  @IsOptional()
   @IsBoolean()
   isVerified?: boolean;
 }

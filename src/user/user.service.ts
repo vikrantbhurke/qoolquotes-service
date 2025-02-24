@@ -179,15 +179,8 @@ export class UserService {
 
     if (!user) throw new Error("User not found.");
 
-    const {
-      firstname,
-      lastname,
-      email,
-      password,
-      subscriptionStatus,
-      customerId,
-      isVerified,
-    } = updateUserByIdDTO;
+    const { firstname, lastname, email, password, isVerified } =
+      updateUserByIdDTO;
 
     if (email && email !== user.email) {
       const token = await this.generateToken({ uid, email });
@@ -209,10 +202,6 @@ export class UserService {
       firstname: firstname ? firstname : user.firstname,
       lastname: lastname ? lastname : user.lastname,
       email: user.email,
-      subscriptionStatus: subscriptionStatus
-        ? subscriptionStatus
-        : user.subscriptionStatus,
-      customerId: customerId ? customerId : user.customerId,
       hashedPassword: password
         ? await this.userUtility.encryptPassword(password)
         : user.hashedPassword,
