@@ -34,7 +34,7 @@ export class PlaylistQuoteService {
 
     if (!playlist) throw new Error("Playlist not found.");
 
-    const user = await this.userService.getUserById(playlist.creatorId);
+    const user = await this.userService.getUserById(playlist.creatorId._id);
     if (!user) throw new Error("User not found.");
     const userRole = user.role;
 

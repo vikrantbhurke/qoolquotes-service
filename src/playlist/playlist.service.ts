@@ -53,6 +53,7 @@ export class PlaylistService {
 
   async createPlaylist(createPlaylistDTO: CreatePlaylistDTO) {
     const { name, description, access, creatorId, quoteId } = createPlaylistDTO;
+
     const user = await this.userService.getUserById(creatorId);
     if (!user) throw new Error("User not found.");
     const userRole = user.role;
