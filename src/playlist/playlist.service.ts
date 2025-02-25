@@ -10,16 +10,21 @@ import { PlaylistSaverService } from "../playlist-saver";
 import { PlaylistQuoteService } from "../playlist-quote";
 import { PlaylistLikerService } from "../playlist-liker";
 import { DeletionTracker } from "../global/utilities";
-import { PLAYLIST_LIMIT } from "../global/constants/constants";
+import {
+  CREATE_PLAYLIST_FREE_LIMIT,
+  CREATE_PLAYLIST_PAID_LIMIT,
+} from "../global/constants/constants";
 import { SaverIdDTO } from "../playlist-saver/dtos";
 import { Access } from "./enums";
-import { Order } from "../global/enums";
+import { UserService } from "user";
+import { Role } from "../user/enums";
 
 export class PlaylistService {
   playlistRepository: PlaylistRepository;
   playlistQuoteService: PlaylistQuoteService;
   playlistSaverService: PlaylistSaverService;
   playlistLikerService: PlaylistLikerService;
+  userService: UserService;
   deletionTracker: DeletionTracker;
 
   setPlaylistRepository(playlistRepository: PlaylistRepository): void {
@@ -38,21 +43,38 @@ export class PlaylistService {
     this.playlistLikerService = playlistLikerService;
   }
 
+  setUserService(userService: UserService): void {
+    this.userService = userService;
+  }
+
   setDeletionTracker(deletionTracker: DeletionTracker) {
     this.deletionTracker = deletionTracker;
   }
 
   async createPlaylist(createPlaylistDTO: CreatePlaylistDTO) {
     const { name, description, access, creatorId, quoteId } = createPlaylistDTO;
+    const user = await this.userService.getUserById(creatorId);
+    if (!user) throw new Error("User not found.");
+    const userRole = user.role;
 
     const count = await this.countPlaylistsByCreatorId({
       creatorId,
     });
 
-    if (count && count >= PLAYLIST_LIMIT)
+    if (
+      userRole === Role.Private &&
+      count &&
+      count >= CREATE_PLAYLIST_FREE_LIMIT
+    ) {
       throw new Error(
-        `You can't create more than ${PLAYLIST_LIMIT} playlists.`
+        `You can't create more than ${CREATE_PLAYLIST_FREE_LIMIT} playlists.`
       );
+    } else {
+      if (count && count >= CREATE_PLAYLIST_PAID_LIMIT)
+        throw new Error(
+          `You can't create more than ${CREATE_PLAYLIST_PAID_LIMIT} playlists.`
+        );
+    }
 
     const newPlaylist = await this.playlistRepository.createPlaylist({
       name,
@@ -71,13 +93,28 @@ export class PlaylistService {
 
   async clonePlaylist(playlistIdCreatorIdDTO: PlaylistIdCreatorIdDTO) {
     const { playlistId, creatorId } = playlistIdCreatorIdDTO;
+    const user = await this.userService.getUserById(creatorId);
+    if (!user) throw new Error("User not found.");
+    const userRole = user.role;
 
     const count = await this.countPlaylistsByCreatorId({
       creatorId,
     });
 
-    if (count && count >= PLAYLIST_LIMIT)
-      throw new Error(`You can't clone more than ${PLAYLIST_LIMIT} playlists.`);
+    if (
+      userRole === Role.Private &&
+      count &&
+      count >= CREATE_PLAYLIST_FREE_LIMIT
+    ) {
+      throw new Error(
+        `You can't clone more than ${CREATE_PLAYLIST_FREE_LIMIT} playlists.`
+      );
+    } else {
+      if (count && count >= CREATE_PLAYLIST_PAID_LIMIT)
+        throw new Error(
+          `You can't clone more than ${CREATE_PLAYLIST_PAID_LIMIT} playlists.`
+        );
+    }
 
     const playlist = await this.getPlaylistById(playlistId);
 

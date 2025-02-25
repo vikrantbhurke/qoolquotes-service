@@ -1,11 +1,17 @@
 import { PlaylistQuoteRepository } from "./index";
-import { QUOTE_LIMIT } from "../global/constants/constants";
+import {
+  QUOTE_FREE_LIMIT,
+  QUOTE_PAID_LIMIT,
+} from "../global/constants/constants";
 import { PlaylistService } from "../playlist/playlist.service";
 import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
+import { UserService } from "../user";
+import { Role } from "../user/enums";
 
 export class PlaylistQuoteService {
   playlistQuoteRepository: PlaylistQuoteRepository;
   playlistService: PlaylistService;
+  userService: UserService;
 
   setPlaylistQuoteRepository(
     playlistQuoteRepository: PlaylistQuoteRepository
@@ -17,15 +23,35 @@ export class PlaylistQuoteService {
     this.playlistService = playlistService;
   }
 
+  setUserService(userService: UserService): void {
+    this.userService = userService;
+  }
+
   async createPlaylistQuote(playlistIdQuoteIdDTO: PlaylistIdQuoteIdDTO) {
+    const playlist = await this.playlistService.getPlaylistById(
+      playlistIdQuoteIdDTO.playlistId
+    );
+
+    if (!playlist) throw new Error("Playlist not found.");
+
+    const user = await this.userService.getUserById(playlist.creatorId);
+    if (!user) throw new Error("User not found.");
+    const userRole = user.role;
+
     const count = await this.countPlaylistsQuotesByPlaylistId({
       playlistId: playlistIdQuoteIdDTO.playlistId,
     });
 
-    if (count && count >= QUOTE_LIMIT)
+    if (userRole === Role.Private && count && count >= QUOTE_FREE_LIMIT) {
       throw new Error(
-        `You can't add more than ${QUOTE_LIMIT} quotes to a playlist.`
+        `You can't add more than ${QUOTE_FREE_LIMIT} quotes to a playlist.`
       );
+    } else {
+      if (count && count >= QUOTE_PAID_LIMIT)
+        throw new Error(
+          `You can't add more than ${QUOTE_PAID_LIMIT} quotes to a playlist.`
+        );
+    }
 
     await this.playlistService.incPlaylistQuotes(
       playlistIdQuoteIdDTO.playlistId

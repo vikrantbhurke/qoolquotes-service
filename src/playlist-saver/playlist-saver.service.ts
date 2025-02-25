@@ -1,9 +1,15 @@
 import { PlaylistSaverRepository } from "./index";
-import { PLAYLIST_LIMIT } from "../global/constants/constants";
+import {
+  SAVE_PLAYLIST_FREE_LIMIT,
+  SAVE_PLAYLIST_PAID_LIMIT,
+} from "../global/constants/constants";
 import { PlaylistIdSaverIdDTO, SaverIdDTO, PlaylistIdDTO } from "./dtos";
+import { UserService } from "../user";
+import { Role } from "../user/enums";
 
 export class PlaylistSaverService {
-  private playlistSaverRepository: PlaylistSaverRepository;
+  playlistSaverRepository: PlaylistSaverRepository;
+  userService: UserService;
 
   setPlaylistSaverRepository(
     playlistSaverRepository: PlaylistSaverRepository
@@ -11,13 +17,36 @@ export class PlaylistSaverService {
     this.playlistSaverRepository = playlistSaverRepository;
   }
 
+  setUserService(userService: UserService): void {
+    this.userService = userService;
+  }
+
   async createPlaylistSaver(playlistIdSaverIdDTO: PlaylistIdSaverIdDTO) {
+    const user = await this.userService.getUserById(
+      playlistIdSaverIdDTO.saverId
+    );
+
+    if (!user) throw new Error("User not found.");
+    const userRole = user.role;
+
     const count = await this.countPlaylistsSaversBySaverId({
       saverId: playlistIdSaverIdDTO.saverId,
     });
 
-    if (count && count >= PLAYLIST_LIMIT)
-      throw new Error(`You can't save more than ${PLAYLIST_LIMIT} playlists.`);
+    if (
+      userRole === Role.Private &&
+      count &&
+      count >= SAVE_PLAYLIST_FREE_LIMIT
+    ) {
+      throw new Error(
+        `You can't save more than ${SAVE_PLAYLIST_FREE_LIMIT} playlists.`
+      );
+    } else {
+      if (count && count >= SAVE_PLAYLIST_PAID_LIMIT)
+        throw new Error(
+          `You can't save more than ${SAVE_PLAYLIST_PAID_LIMIT} playlists.`
+        );
+    }
 
     return await this.playlistSaverRepository.createPlaylistSaver(
       playlistIdSaverIdDTO

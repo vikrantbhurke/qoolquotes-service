@@ -7,8 +7,10 @@ import {
   playlistSaverRepository,
   PlaylistSaverRepository,
 } from "./playlist-saver.repository";
+import { userService } from "../user";
 
 playlistSaverService.setPlaylistSaverRepository(playlistSaverRepository);
+playlistSaverService.setUserService(userService);
 
 export {
   playlistSaverService,
