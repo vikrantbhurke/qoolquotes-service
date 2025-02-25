@@ -3,9 +3,9 @@ import {
   QUOTE_FREE_LIMIT,
   QUOTE_PAID_LIMIT,
 } from "../global/constants/constants";
+import { UserService } from "../user";
 import { PlaylistService } from "../playlist/playlist.service";
 import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
-import { UserService } from "../user";
 import { Role } from "../user/enums";
 
 export class PlaylistQuoteService {
@@ -34,7 +34,10 @@ export class PlaylistQuoteService {
 
     if (!playlist) throw new Error("Playlist not found.");
 
-    const user = await this.userService.getUserById(playlist.creatorId._id);
+    const user = await this.userService.getUserById(
+      playlist.creatorId._id.toString()
+    );
+    console.log("playlist after", playlist);
     if (!user) throw new Error("User not found.");
     const userRole = user.role;
 

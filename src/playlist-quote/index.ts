@@ -8,9 +8,11 @@ import {
   PlaylistQuoteRepository,
 } from "./playlist-quote.repository";
 import { playlistService } from "../playlist";
+import { userService } from "../user";
 
 playlistQuoteService.setPlaylistQuoteRepository(playlistQuoteRepository);
 playlistQuoteService.setPlaylistService(playlistService);
+playlistQuoteService.setUserService(userService);
 
 export {
   playlistQuoteService,
