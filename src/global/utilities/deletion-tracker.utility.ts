@@ -1,5 +1,5 @@
 export class DeletionTracker {
-  private deletingEntities: Set<string>;
+  deletingEntities: Set<string>;
 
   constructor() {
     this.deletingEntities = new Set();

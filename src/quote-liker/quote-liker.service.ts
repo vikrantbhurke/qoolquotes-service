@@ -2,7 +2,7 @@ import { QuoteLikerRepository } from "./index";
 import { LikerIdDTO, QuoteIdDTO, QuoteIdLikerIdDTO } from "./dtos";
 
 export class QuoteLikerService {
-  private quoteLikerRepository: QuoteLikerRepository;
+  quoteLikerRepository: QuoteLikerRepository;
 
   setQuoteLikerRepository(quoteLikerRepository: QuoteLikerRepository): void {
     this.quoteLikerRepository = quoteLikerRepository;
