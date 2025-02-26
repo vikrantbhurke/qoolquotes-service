@@ -7,6 +7,7 @@ import { UserService } from "../user";
 import { PlaylistService } from "../playlist/playlist.service";
 import { PlaylistIdQuoteIdDTO, PlaylistIdDTO, QuoteIdDTO } from "./dtos";
 import { Role } from "../user/enums";
+import { Status } from "../subscription/enums";
 
 export class PlaylistQuoteService {
   playlistQuoteRepository: PlaylistQuoteRepository;
@@ -45,16 +46,27 @@ export class PlaylistQuoteService {
       playlistId: playlistIdQuoteIdDTO.playlistId,
     });
 
-    if (userRole === Role.Private && count && count >= QUOTE_FREE_LIMIT) {
-      throw new Error(
-        `You can't add more than ${QUOTE_FREE_LIMIT} quotes to a playlist.`
-      );
-    } else {
-      if (count && count >= QUOTE_PAID_LIMIT)
-        throw new Error(
-          `You can't add more than ${QUOTE_PAID_LIMIT} quotes to a playlist.`
-        );
-    }
+    const userIsActive = user.subscriptionStatus === Status.Active;
+    const userIsInactive = user.subscriptionStatus === Status.Inactive;
+    const userIsSuspended = user.subscriptionStatus === Status.Suspended;
+
+    const maxFreeLimit = `You can't add more than ${QUOTE_FREE_LIMIT} quotes to a playlist. Subscribe to remove limit.`;
+    const maxPaidLimit = `You can't add more than ${QUOTE_PAID_LIMIT} quotes to a playlist. Maximum quote limit reached.`;
+    const withinLimit = `Activate your subscription to add more quotes.`;
+
+    if (userIsInactive && count && count >= QUOTE_FREE_LIMIT)
+      throw new Error(maxFreeLimit);
+
+    if ((userIsActive || userIsSuspended) && count && count >= QUOTE_PAID_LIMIT)
+      throw new Error(maxPaidLimit);
+
+    if (
+      userIsSuspended &&
+      count &&
+      count >= QUOTE_FREE_LIMIT &&
+      count < QUOTE_PAID_LIMIT
+    )
+      throw new Error(withinLimit);
 
     await this.playlistService.incPlaylistQuotes(
       playlistIdQuoteIdDTO.playlistId
