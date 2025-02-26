@@ -124,9 +124,9 @@ export class PlaylistService {
     const userIsInactive = user.subscriptionStatus === Status.Inactive;
     const userIsSuspended = user.subscriptionStatus === Status.Suspended;
 
-    const maxFreeLimit = `You can't clone more than ${CREATE_PLAYLIST_FREE_LIMIT} playlists. Subscribe to remove limit.`;
-    const maxPaidLimit = `You can't clone more than ${CREATE_PLAYLIST_PAID_LIMIT} playlists. Maximum playlist limit reached.`;
-    const withinLimit = `Activate your subscription to clone more playlists.`;
+    const maxFreeLimit = `You can't create more than ${CREATE_PLAYLIST_FREE_LIMIT} playlists. Subscribe to remove limit.`;
+    const maxPaidLimit = `You can't create more than ${CREATE_PLAYLIST_PAID_LIMIT} playlists. Maximum playlist limit reached.`;
+    const withinLimit = `Activate your subscription to create more playlists.`;
 
     if (userIsInactive && count && count >= CREATE_PLAYLIST_FREE_LIMIT)
       throw new Error(maxFreeLimit);
