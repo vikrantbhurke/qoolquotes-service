@@ -26,9 +26,9 @@ export class PayPalWebhook {
 
       if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
         updateUserDTO = {
+          subscriptionId,
           role: Role.Subscriber,
           subscription: Subscription.PayPal,
-          subscriptionId,
           subscriptionStatus: subscriptionUtility.getStatus(
             subscriptionStatus
           ) as any,
@@ -37,9 +37,9 @@ export class PayPalWebhook {
 
       if (eventType === "BILLING.SUBSCRIPTION.SUSPENDED") {
         updateUserDTO = {
+          subscriptionId,
           role: Role.Private,
           subscription: Subscription.PayPal,
-          subscriptionId,
           subscriptionStatus: subscriptionUtility.getStatus(
             subscriptionStatus
           ) as any,
@@ -53,8 +53,8 @@ export class PayPalWebhook {
         {
           updateUserDTO = {
             role: Role.Private,
-            subscription: Subscription.Free,
             subscriptionId: "none",
+            subscription: Subscription.Free,
             subscriptionStatus: subscriptionUtility.getStatus(
               subscriptionStatus
             ) as any,
@@ -62,8 +62,8 @@ export class PayPalWebhook {
         }
       }
 
-      console.log("Subscription Id", subscriptionId);
       console.log("Event Type", eventType);
+      console.log("Subscription Id", subscriptionId);
       console.log("Subscription Status", subscriptionStatus);
       console.log("Email Address", email);
 

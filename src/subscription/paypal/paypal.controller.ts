@@ -107,7 +107,6 @@ export class PayPalController {
         .status(200)
         .json({ message: "Subscription suspended successfully." });
     } catch (error: any) {
-      console.log("Error suspending PayPal subscription: ", error);
       return response.status(500).json({ message: error.message });
     }
   }
