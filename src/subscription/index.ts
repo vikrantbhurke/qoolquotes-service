@@ -1,22 +1,24 @@
-import paypalControllerRouter from "./paypal/paypal.controller";
-import paypalWebhookRouter from "./paypal/paypal.webhook";
-import stripeControllerRouter from "./stripe/stripe.controller";
-import stripeWebhookRouter from "./stripe/stripe.webhook";
-import { stripeService, StripeService } from "./stripe/stripe.service";
-import { paypalService, PayPalService } from "./paypal/paypal.service";
+import {
+  paypalControllerRouter,
+  paypalWebhookRouter,
+  paypalService,
+} from "./paypal";
+
+import {
+  stripeControllerRouter,
+  stripeWebhookRouter,
+  stripeService,
+} from "./stripe";
+
 import { userService, UserService } from "../user";
 
 stripeService.setUserService(userService);
 paypalService.setUserService(userService);
 
 export {
-  stripeService,
-  stripeControllerRouter,
-  stripeWebhookRouter,
-  paypalService,
   paypalControllerRouter,
   paypalWebhookRouter,
-  StripeService,
-  PayPalService,
+  stripeControllerRouter,
+  stripeWebhookRouter,
   UserService,
 };

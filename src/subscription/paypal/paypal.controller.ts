@@ -1,7 +1,14 @@
-import express, { Request, Response } from "express";
 import axios from "axios";
+import express, { Request, Response } from "express";
+import { PayPalService, paypalService } from "./index";
 
-export class PayPalController {
+class PayPalController {
+  paypalService: PayPalService;
+
+  constructor() {
+    this.paypalService = paypalService;
+  }
+
   async getPayPalAccessToken() {
     const auth = Buffer.from(
       `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`
@@ -66,13 +73,19 @@ export class PayPalController {
 
   async getPayPalSubscription(request: Request, response: Response) {
     try {
-      if (request.body.subscriptionId === "none")
+      const email = request.body.email;
+      const user = await this.paypalService.getUserByEmail({ email });
+
+      if (!user)
+        return response.status(404).json({ message: "User not found." });
+
+      if (user.subscriptionId === "none")
         return response
           .status(204)
           .json({ message: "User has no active subscription." });
 
       const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
         await this.getHeader()
       );
 
@@ -131,7 +144,7 @@ export class PayPalController {
   }
 }
 
-export const paypalController = new PayPalController();
+const paypalController = new PayPalController();
 
 const paypalControllerRouter = express.Router();
 

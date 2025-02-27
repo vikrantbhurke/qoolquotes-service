@@ -12,16 +12,8 @@ export class StripeService {
     return await this.userService.updateUserByEmail(emailDTO, updateUserDTO);
   }
 
-  async updateUserSubscriptionStatus(subscriptionDetails: any) {
-    await this.userService.updateUserSubscriptionStatus(subscriptionDetails);
-  }
-
-  async addUserCustomerId(userDetails: any) {
-    await this.userService.addUserCustomerId(userDetails);
-  }
-
-  async removeUserCustomerId(userDetails: any) {
-    await this.userService.removeUserCustomerId(userDetails);
+  async getUserByEmail(emailDTO: EmailDTO) {
+    return await this.userService.getUserByEmail(emailDTO);
   }
 }
 
