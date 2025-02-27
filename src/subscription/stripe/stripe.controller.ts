@@ -17,7 +17,7 @@ export class StripeController {
           },
         ],
         success_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
-        cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
+        cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
       });
 
       return response.json({ sessionUrl: session.url });

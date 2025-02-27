@@ -48,7 +48,7 @@ export class PayPalController {
               payee_preferred: "IMMEDIATE_PAYMENT_REQUIRED",
             },
             return_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
-            cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
+            cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
           },
         },
         await this.getHeader()
