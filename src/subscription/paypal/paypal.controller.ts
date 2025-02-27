@@ -1,15 +1,7 @@
 import express, { Request, Response } from "express";
-import { PayPalService, paypalService } from "./paypal.service";
 import axios from "axios";
 
 export class PayPalController {
-  paypalService: PayPalService;
-
-  constructor() {
-    this.paypalService = paypalService;
-  }
-
-  // Utility method to get PayPal access token
   async getPayPalAccessToken() {
     const auth = Buffer.from(
       `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`
@@ -29,7 +21,6 @@ export class PayPalController {
     return paypalResponse.data.access_token;
   }
 
-  // Utility method to get PayPal headers
   async getHeader() {
     const accessToken = await this.getPayPalAccessToken();
 
@@ -42,7 +33,7 @@ export class PayPalController {
     };
   }
 
-  async createSubscription(request: Request, response: Response) {
+  async createPayPalSubscription(request: Request, response: Response) {
     try {
       const paypalResponse = await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions`,
@@ -57,7 +48,7 @@ export class PayPalController {
               payee_preferred: "IMMEDIATE_PAYMENT_REQUIRED",
             },
             return_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
-            cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
+            cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
           },
         },
         await this.getHeader()
@@ -73,22 +64,15 @@ export class PayPalController {
     }
   }
 
-  async getSubscription(request: Request, response: Response) {
+  async getPayPalSubscription(request: Request, response: Response) {
     try {
-      const user = await this.paypalService.getUserByEmail({
-        email: request.body.email,
-      });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
-      if (user.subscriptionId === "none")
+      if (request.body.subscriptionId === "none")
         return response
           .status(204)
           .json({ message: "User has no active subscription." });
 
       const paypalResponse = await axios.get(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}`,
         await this.getHeader()
       );
 
@@ -98,17 +82,10 @@ export class PayPalController {
     }
   }
 
-  async suspendSubscription(request: Request, response: Response) {
+  async suspendPayPalSubscription(request: Request, response: Response) {
     try {
-      const user = await this.paypalService.getUserByEmail({
-        email: request.body.email,
-      });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/suspend`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}/suspend`,
         { reason: "User requested suspension." },
         await this.getHeader()
       );
@@ -121,17 +98,10 @@ export class PayPalController {
     }
   }
 
-  async activateSubscription(request: Request, response: Response) {
+  async activatePayPalSubscription(request: Request, response: Response) {
     try {
-      const user = await this.paypalService.getUserByEmail({
-        email: request.body.email,
-      });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/activate`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}/activate`,
         { reason: "User requested activation." },
         await this.getHeader()
       );
@@ -144,17 +114,10 @@ export class PayPalController {
     }
   }
 
-  async cancelSubscription(request: Request, response: Response) {
+  async cancelPayPalSubscription(request: Request, response: Response) {
     try {
-      const user = await this.paypalService.getUserByEmail({
-        email: request.body.email,
-      });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
       await axios.post(
-        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${user.subscriptionId}/cancel`,
+        `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}/cancel`,
         { reason: "User requested cancellation." },
         await this.getHeader()
       );
@@ -174,27 +137,27 @@ const paypalControllerRouter = express.Router();
 
 paypalControllerRouter.post(
   "/create-subscription",
-  paypalController.createSubscription.bind(paypalController)
+  paypalController.createPayPalSubscription.bind(paypalController)
 );
 
 paypalControllerRouter.post(
   "/get-subscription",
-  paypalController.getSubscription.bind(paypalController)
+  paypalController.getPayPalSubscription.bind(paypalController)
 );
 
 paypalControllerRouter.post(
   "/suspend-subscription",
-  paypalController.suspendSubscription.bind(paypalController)
+  paypalController.suspendPayPalSubscription.bind(paypalController)
 );
 
 paypalControllerRouter.post(
   "/activate-subscription",
-  paypalController.activateSubscription.bind(paypalController)
+  paypalController.activatePayPalSubscription.bind(paypalController)
 );
 
 paypalControllerRouter.post(
   "/cancel-subscription",
-  paypalController.cancelSubscription.bind(paypalController)
+  paypalController.cancelPayPalSubscription.bind(paypalController)
 );
 
 export default paypalControllerRouter;

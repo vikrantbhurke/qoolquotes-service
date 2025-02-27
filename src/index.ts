@@ -38,8 +38,6 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-export const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,

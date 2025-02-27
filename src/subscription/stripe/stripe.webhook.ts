@@ -1,7 +1,11 @@
-import express, { Request, Response } from "express";
-import { StripeService, stripeService } from "../index";
-import { stripe } from "../../index";
+import { Role } from "../../user/enums";
+import { Subscription } from "../enums";
 import { subscriptionUtility } from "../subscription.utility";
+import { StripeService, stripeService } from "./stripe.service";
+import express, { Request, Response } from "express";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class StripeWebhook {
   stripeService: StripeService;
@@ -12,132 +16,85 @@ export class StripeWebhook {
 
   async webhook(request: Request, response: Response) {
     try {
-      let event = request.body;
+      const sig = request.headers["stripe-signature"] as string;
+      const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
-      // If you are testing with the CLI, find the secret by running `stripe listen` or `stripe listen --forward-to localhost:3000/stripe/webhook`
-      // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
-      // at https://dashboard.stripe.com/webhooks
-      const endpointSecret = process.env.STRIPE_WEBHOOK_SIGNING_SECRET;
-
-      // Only verify the event if you have an endpoint secret defined.
-      // Otherwise use the basic event deserialized with JSON.parse
-      if (endpointSecret) {
-        // Get the signature sent by Stripe
-        const signature = request.headers["stripe-signature"];
-        try {
-          event = stripe.webhooks.constructEvent(
-            request.body,
-            signature,
-            endpointSecret
-          );
-        } catch (error: any) {
-          console.log(
-            `⚠️ Webhook signature verification failed.`,
-            error.message
-          );
-          return response.sendStatus(400);
-        }
+      let event;
+      try {
+        event = stripe.webhooks.constructEvent(
+          request.body,
+          sig,
+          endpointSecret
+        );
+      } catch (err: any) {
+        console.error("Webhook signature verification failed.", err.message);
+        return response.status(400).json({ message: "Invalid signature." });
       }
 
-      let customer = await stripe.customers.retrieve(
-        event.data.object.customer
-      );
+      console.log("Stripe Webhook:", event);
 
-      // const emailDTO = {
-      //   email: customer.email,
-      // };
+      //   const eventType = event.type;
+      //   const subscription = event.data.object as Stripe.Subscription;
+      //   const subscriptionId = subscription.id;
+      //   const subscriptionStatus = subscription.status;
+      //   const customerId = subscription.customer as string;
 
-      // const updateUserDTO = {
-      //   subscriptionId: event.data.object.subscription,
-      //   subscriptionStatus: subscriptionUtility.getSubscriptionStatus(
-      //     event.data.object.status
-      //   ) as any,
-      // };
+      //   const customer = await stripe.customers.retrieve(customerId);
+      //   const email = (customer as any).email;
 
-      // await this.stripeService.updateUserByEmail(emailDTO, updateUserDTO);
+      //   const emailDTO = { email };
+      //   let updateUserDTO = {};
 
-      let details = {
-        subscriptionStatus: event.data.object.status,
-        email: customer.email,
-      };
+      //   if (
+      //     eventType === "customer.subscription.created" ||
+      //     eventType === "customer.subscription.updated"
+      //   ) {
+      //     if (subscriptionStatus === "active") {
+      //       updateUserDTO = {
+      //         role: Role.Subscriber,
+      //         subscription: Subscription.Stripe,
+      //         subscriptionId,
+      //         subscriptionStatus: subscriptionUtility.getStatus(
+      //           subscriptionStatus
+      //         ) as any,
+      //       };
+      //     } else if (
+      //       subscriptionStatus === "paused" ||
+      //       subscriptionStatus === "past_due"
+      //     ) {
+      //       updateUserDTO = {
+      //         role: Role.Private,
+      //         subscription: Subscription.Stripe,
+      //         subscriptionId,
+      //         subscriptionStatus: subscriptionUtility.getStatus(
+      //           subscriptionStatus
+      //         ) as any,
+      //       };
+      //     }
+      //   }
 
-      let addUserDetails = {
-        customerId: event.data.object.customer,
-        email: customer.email,
-      };
+      //   if (eventType === "customer.subscription.deleted") {
+      //     updateUserDTO = {
+      //       role: Role.Private,
+      //       subscription: Subscription.Free,
+      //       subscriptionId: "none",
+      //       subscriptionStatus: subscriptionUtility.getStatus(
+      //         subscriptionStatus
+      //       ) as any,
+      //     };
+      //   }
 
-      let removeUserDetails = {
-        email: customer.email,
-      };
+      //   console.log("Stripe Subscription Id:", subscriptionId);
+      //   console.log("Event Type:", eventType);
+      //   console.log("Subscription Status:", subscriptionStatus);
+      //   console.log("Customer Id:", customerId);
 
-      console.log("Details Are", event, event.type, event.data.object.status);
-
-      // switch (event.type) {
-      //   case "customer.subscription.created":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     await this.stripeService.addUserCustomerId(addUserDetails);
-      //     console.log(
-      //       "customer.subscription.created",
-      //       addUserDetails.customerId,
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.deleted":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     await this.stripeService.removeUserCustomerId(removeUserDetails);
-      //     console.log(
-      //       "customer.subscription.deleted",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.paused":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.paused",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.pending_update_applied":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.pending_update_applied",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.pending_update_expired":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.pending_update_expired",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.resumed":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.resumed",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.trial_will_end":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.trial_will_end",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   case "customer.subscription.updated":
-      //     await this.stripeService.updateUserSubscriptionStatus(details);
-      //     console.log(
-      //       "customer.subscription.updated",
-      //       details.subscriptionStatus
-      //     );
-      //     break;
-      //   default:
-      // }
+      //   await this.stripeService.updateUserByEmail(emailDTO, updateUserDTO);
 
       return response.status(200).json({ message: "Webhook received." });
-    } catch (err: any) {
-      return response.status(500).json({ message: err.message });
+    } catch (error: any) {
+      console.error("Error processing Stripe webhook:", error);
+      return response.status(500).json({ message: error.message });
     }
   }
 }
@@ -153,3 +110,78 @@ stripeWebhookRouter.post(
 );
 
 export default stripeWebhookRouter;
+
+// export class StripeWebhook {
+//   stripeService: StripeService;
+
+//   constructor() {
+//     this.stripeService = stripeService;
+//   }
+
+//   async webhook(request: Request, response: Response) {
+//     try {
+//       const sig = request.headers["stripe-signature"] as string;
+//       const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
+
+//       const event = stripe.webhooks.constructEvent(
+//         request.body,
+//         sig,
+//         endpointSecret
+//       );
+
+//       const subscriptionId = event.data.object.id;
+//       const eventType = event.type;
+//       const subscriptionStatus = event.data.object.status;
+//       const email = event.data.object.customer_email;
+
+//       const emailDTO = { email };
+
+//       let updateUserDTO = {};
+
+//       if (eventType === "customer.subscription.created") {
+//         updateUserDTO = {
+//           role: Role.Subscriber,
+//           subscription: Subscription.Stripe,
+//           subscriptionId,
+//           subscriptionStatus: subscriptionUtility.getStatus(
+//             subscriptionStatus
+//           ) as any,
+//         };
+//       }
+
+//       if (eventType === "customer.subscription.updated") {
+//         updateUserDTO = {
+//           role:
+//             subscriptionStatus === "active" ? Role.Subscriber : Role.Private,
+//           subscription: Subscription.Stripe,
+//           subscriptionId,
+//           subscriptionStatus: subscriptionUtility.getStatus(
+//             subscriptionStatus
+//           ) as any,
+//         };
+//       }
+
+//       if (eventType === "customer.subscription.deleted") {
+//         updateUserDTO = {
+//           role: Role.Private,
+//           subscription: Subscription.Free,
+//           subscriptionId: "none",
+//           subscriptionStatus: subscriptionUtility.getStatus(
+//             subscriptionStatus
+//           ) as any,
+//         };
+//       }
+
+//       console.log("Subscription Id", subscriptionId);
+//       console.log("Event Type", eventType);
+//       console.log("Subscription Status", subscriptionStatus);
+//       console.log("Email Address", email);
+
+//       await this.stripeService.updateUserByEmail(emailDTO, updateUserDTO);
+//       return response.status(200).json({ message: "Webhook received." });
+//     } catch (error: any) {
+//       console.log("Error", error);
+//       return response.status(500).json({ message: error.message });
+//     }
+//   }
+// }
