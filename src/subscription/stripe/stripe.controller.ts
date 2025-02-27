@@ -1,16 +1,9 @@
 import Stripe from "stripe";
 import express, { Request, Response } from "express";
-import { StripeService } from "./index";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class StripeController {
-  stripeService: StripeService;
-
-  setStripeService(stripeService: StripeService) {
-    this.stripeService = stripeService;
-  }
-
   async createStripeSubscription(request: Request, response: Response) {
     try {
       const session = await stripe.checkout.sessions.create({
@@ -27,7 +20,7 @@ export class StripeController {
         cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
       });
 
-      return response.json({ sessionUrl: session.url });
+      return response.status(200).json({ approve_url: session.url });
       // return response.redirect(303, session.url);
     } catch (err: any) {
       return response.status(500).json({ message: err.message });
@@ -36,19 +29,13 @@ export class StripeController {
 
   async getStripeSubscription(request: Request, response: Response) {
     try {
-      const email = request.body.email;
-      const user = await this.stripeService.getUserByEmail({ email });
-
-      if (!user)
-        return response.status(404).json({ message: "User not found." });
-
-      if (user.subscriptionId === "none")
+      if (request.body.subscriptionId === "none")
         return response
           .status(204)
           .json({ message: "User has no active subscription." });
 
       const subscription = await stripe.subscriptions.retrieve(
-        user.subscriptionId
+        request.body.subscriptionId
       );
 
       return response.status(200).json(subscription);
