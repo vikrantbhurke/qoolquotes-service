@@ -74,6 +74,7 @@ class PayPalController {
   async getPayPalSubscription(request: Request, response: Response) {
     try {
       const email = request.body.email;
+      console.log("User Email: ", email);
       const user = await this.paypalService.getUserByEmail({ email });
 
       if (!user)
