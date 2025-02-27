@@ -1,11 +1,11 @@
 import axios from "axios";
 import express, { Request, Response } from "express";
-import { PayPalService, paypalService } from "./index";
+import { PayPalService } from "./index";
 
-class PayPalController {
+export class PayPalController {
   paypalService: PayPalService;
 
-  constructor() {
+  setPayPalService(paypalService: PayPalService) {
     this.paypalService = paypalService;
   }
 
@@ -74,7 +74,6 @@ class PayPalController {
   async getPayPalSubscription(request: Request, response: Response) {
     try {
       const email = request.body.email;
-      console.log("User Email: ", email);
       const user = await this.paypalService.getUserByEmail({ email });
 
       if (!user)
@@ -145,7 +144,7 @@ class PayPalController {
   }
 }
 
-const paypalController = new PayPalController();
+export const paypalController = new PayPalController();
 
 const paypalControllerRouter = express.Router();
 

@@ -1,5 +1,5 @@
 import { EmailDTO, UpdateUserDTO } from "../../user/dtos";
-import { UserService } from "../index";
+import { UserService } from "./index";
 
 export class StripeService {
   userService: UserService;

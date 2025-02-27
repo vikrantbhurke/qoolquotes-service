@@ -1,13 +1,13 @@
 import Stripe from "stripe";
 import express, { Request, Response } from "express";
-import { StripeService, stripeService } from "./index";
+import { StripeService } from "./index";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class StripeController {
   stripeService: StripeService;
 
-  constructor() {
+  setStripeService(stripeService: StripeService) {
     this.stripeService = stripeService;
   }
 
