@@ -89,6 +89,7 @@ export class StripeWebhook {
               }
               break;
             case "canceled":
+            case "incomplete":
               role = Role.Private;
               subscription = Subscription.Free;
               subscriptionStatus = Status.Inactive;
