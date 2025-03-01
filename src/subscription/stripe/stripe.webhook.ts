@@ -50,7 +50,7 @@ export class StripeWebhook {
         case "customer.subscription.updated":
         case "customer.subscription.deleted":
           const subscriptionObject = event.data.object as Stripe.Subscription;
-          const subscriptionId = subscriptionObject.id;
+          const subId = subscriptionObject.id;
           const status = subscriptionObject.status;
           const pauseCollection = subscriptionObject.pause_collection;
           const customerId = subscriptionObject.customer as string;
@@ -61,7 +61,7 @@ export class StripeWebhook {
             "Event -",
             eventType,
             "| Id -",
-            subscriptionId,
+            subId,
             "| Status -",
             status,
             "| Pause -",
@@ -72,6 +72,7 @@ export class StripeWebhook {
 
           let role;
           let subscription;
+          let subscriptionId;
           let subscriptionStatus;
           let updateUserDTO = {};
           const emailDTO = { email };
@@ -80,10 +81,12 @@ export class StripeWebhook {
             case "active":
               if (!pauseCollection) {
                 role = Role.Subscriber;
+                subscriptionId = subId;
                 subscription = Subscription.Stripe;
                 subscriptionStatus = Status.Active;
               } else {
                 role = Role.Private;
+                subscriptionId = subId;
                 subscription = Subscription.Stripe;
                 subscriptionStatus = Status.Suspended;
               }
@@ -91,6 +94,7 @@ export class StripeWebhook {
             case "canceled":
             case "incomplete":
               role = Role.Private;
+              subscriptionId = "none";
               subscription = Subscription.Free;
               subscriptionStatus = Status.Inactive;
               break;

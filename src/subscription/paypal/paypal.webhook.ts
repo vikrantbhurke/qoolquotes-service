@@ -15,7 +15,7 @@ export class PayPalWebhook {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
       const eventType = event.event_type;
-      const subscriptionId = event.resource.id;
+      const subId = event.resource.id;
       const status = event.resource.status;
       const email = event.resource.subscriber.email_address;
 
@@ -23,7 +23,7 @@ export class PayPalWebhook {
         "Event:",
         eventType,
         "| Id:",
-        subscriptionId,
+        subId,
         "| Status:",
         status,
         "| Email:",
@@ -32,6 +32,7 @@ export class PayPalWebhook {
 
       let role;
       let subscription;
+      let subscriptionId;
       let subscriptionStatus;
       let updateUserDTO = {};
       const emailDTO = { email };
@@ -39,17 +40,20 @@ export class PayPalWebhook {
       switch (eventType) {
         case "BILLING.SUBSCRIPTION.ACTIVATED":
           role = Role.Subscriber;
+          subscriptionId = subId;
           subscription = Subscription.PayPal;
           subscriptionStatus = status === "ACTIVE" && Status.Active;
           break;
         case "BILLING.SUBSCRIPTION.SUSPENDED":
           role = Role.Private;
+          subscriptionId = subId;
           subscription = Subscription.PayPal;
           subscriptionStatus = status === "SUSPENDED" && Status.Suspended;
           break;
         case "BILLING.SUBSCRIPTION.CANCELLED":
         case "BILLING.SUBSCRIPTION.EXPIRED":
           role = Role.Private;
+          subscriptionId = "none";
           subscription = Subscription.Free;
           subscriptionStatus =
             (status === "CANCELLED" || status === "EXPIRED") && Status.Inactive;
