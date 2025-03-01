@@ -2,12 +2,10 @@ import {
   IsAlpha,
   IsBoolean,
   IsEmail,
-  IsEnum,
   IsOptional,
   IsStrongPassword,
 } from "class-validator";
 import { UserError } from "../user.error";
-import { Status, Subscription } from "../../subscription/enums";
 
 export default class UpdateUserDTO {
   @IsOptional()

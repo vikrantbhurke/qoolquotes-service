@@ -35,7 +35,7 @@ export class PayPalController {
 
   async createPayPalSubscription(request: Request, response: Response) {
     try {
-      const paypalResponse = await axios.post(
+      const session = await axios.post(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions`,
         {
           plan_id: process.env.PAYPAL_PLAN_ID,
@@ -47,14 +47,14 @@ export class PayPalController {
               payer_selected: "PAYPAL",
               payee_preferred: "IMMEDIATE_PAYMENT_REQUIRED",
             },
-            return_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
+            return_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true&subscription=paypal`,
             cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
           },
         },
         await this.getHeader()
       );
 
-      const approve_url = paypalResponse.data.links.find(
+      const approve_url = session.data.links.find(
         (link: any) => link.rel === "approve"
       ).href;
 
@@ -71,12 +71,12 @@ export class PayPalController {
           .status(204)
           .json({ message: "User has no active subscription." });
 
-      const paypalResponse = await axios.get(
+      const subscription = await axios.get(
         `${process.env.PAYPAL_API_URL}/v1/billing/subscriptions/${request.body.subscriptionId}`,
         await this.getHeader()
       );
 
-      return response.status(200).json(paypalResponse.data);
+      return response.status(200).json(subscription.data);
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
     }

@@ -11,10 +11,6 @@ export class StripeService {
   async updateUserByEmail(emailDTO: EmailDTO, updateUserDTO: UpdateUserDTO) {
     return await this.userService.updateUserByEmail(emailDTO, updateUserDTO);
   }
-
-  async getUserByEmail(emailDTO: EmailDTO) {
-    return await this.userService.getUserByEmail(emailDTO);
-  }
 }
 
 export const stripeService = new StripeService();

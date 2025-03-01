@@ -1,8 +1,7 @@
 import { Role } from "../../user/enums";
-import { Subscription } from "../enums";
-import { subscriptionUtility } from "../subscription.utility";
-import { PayPalService, paypalService } from "./paypal.service";
+import { Status, Subscription } from "../enums";
 import express, { Request, Response } from "express";
+import { PayPalService, paypalService } from "./paypal.service";
 
 export class PayPalWebhook {
   paypalService: PayPalService;
@@ -15,62 +14,59 @@ export class PayPalWebhook {
     try {
       const rawBody = request.body.toString();
       const event = JSON.parse(rawBody);
-      const subscriptionId = event.resource.id;
       const eventType = event.event_type;
-      const subscriptionStatus = event.resource.status;
+      const subscriptionId = event.resource.id;
+      const status = event.resource.status;
       const email = event.resource.subscriber.email_address;
 
+      console.log(
+        "Event:",
+        eventType,
+        "| Id:",
+        subscriptionId,
+        "| Status:",
+        status,
+        "| Email:",
+        email
+      );
+
+      let role;
+      let subscription;
+      let subscriptionStatus;
+      let updateUserDTO = {};
       const emailDTO = { email };
 
-      let updateUserDTO = {};
-
-      if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
-        updateUserDTO = {
-          subscriptionId,
-          role: Role.Subscriber,
-          subscription: Subscription.PayPal,
-          subscriptionStatus: subscriptionUtility.getStatus(
-            subscriptionStatus
-          ) as any,
-        };
+      switch (eventType) {
+        case "BILLING.SUBSCRIPTION.ACTIVATED":
+          role = Role.Subscriber;
+          subscription = Subscription.PayPal;
+          subscriptionStatus = status === "ACTIVE" && Status.Active;
+          break;
+        case "BILLING.SUBSCRIPTION.SUSPENDED":
+          role = Role.Private;
+          subscription = Subscription.PayPal;
+          subscriptionStatus = status === "SUSPENDED" && Status.Suspended;
+          break;
+        case "BILLING.SUBSCRIPTION.CANCELLED":
+        case "BILLING.SUBSCRIPTION.EXPIRED":
+          role = Role.Private;
+          subscription = Subscription.Free;
+          subscriptionStatus =
+            (status === "CANCELLED" || status === "EXPIRED") && Status.Inactive;
+          break;
       }
 
-      if (eventType === "BILLING.SUBSCRIPTION.SUSPENDED") {
-        updateUserDTO = {
-          subscriptionId,
-          role: Role.Private,
-          subscription: Subscription.PayPal,
-          subscriptionStatus: subscriptionUtility.getStatus(
-            subscriptionStatus
-          ) as any,
-        };
-      }
-
-      if (
-        eventType === "BILLING.SUBSCRIPTION.CANCELLED" ||
-        eventType === "BILLING.SUBSCRIPTION.EXPIRED"
-      ) {
-        {
-          updateUserDTO = {
-            role: Role.Private,
-            subscriptionId: "none",
-            subscription: Subscription.Free,
-            subscriptionStatus: subscriptionUtility.getStatus(
-              subscriptionStatus
-            ) as any,
-          };
-        }
-      }
-
-      console.log("Event Type", eventType);
-      console.log("Subscription Id", subscriptionId);
-      console.log("Subscription Status", subscriptionStatus);
-      console.log("Email Address", email);
+      updateUserDTO = {
+        role,
+        subscription,
+        subscriptionId,
+        subscriptionStatus,
+      };
 
       await this.paypalService.updateUserByEmail(emailDTO, updateUserDTO);
       return response.status(200).json({ message: "Webhook received." });
     } catch (error: any) {
-      console.log("Error", error);
+      console.log("PayPal Webhook Error:", error);
       return response.status(500).json({ message: error.message });
     }
   }

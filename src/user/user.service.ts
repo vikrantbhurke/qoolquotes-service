@@ -232,45 +232,6 @@ export class UserService {
     return await this.userRepository.updateUserById(user._id, updateUserDTO);
   }
 
-  async updateUserSubscriptionStatus(subscriptionDetails: any) {
-    const { subscriptionStatus, customerEmail } = subscriptionDetails;
-    const user = await this.userRepository.getUserByEmail({
-      email: customerEmail,
-    });
-
-    if (!user) throw new Error("User not found.");
-    console.log("updateUserSubscriptionStatus Before", user.subscriptionStatus);
-    user.subscriptionStatus = subscriptionStatus || user.subscriptionStatus;
-    console.log("updateUserSubscriptionStatus After", user.subscriptionStatus);
-    return await this.userRepository.updateUserById(user._id, user);
-  }
-
-  async addUserCustomerId(userDetails: any) {
-    const { customerId, customerEmail } = userDetails;
-    const user = await this.userRepository.getUserByEmail({
-      email: customerEmail,
-    });
-
-    if (!user) throw new Error("User not found.");
-    console.log("addUserCustomerId Before", user.customerId);
-    user.customerId = customerId;
-    console.log("addUserCustomerId After", user.customerId);
-    return await this.userRepository.updateUserById(user._id, user);
-  }
-
-  async removeUserCustomerId(userDetails: any) {
-    const { customerEmail } = userDetails;
-    const user = await this.userRepository.getUserByEmail({
-      email: customerEmail,
-    });
-
-    if (!user) throw new Error("User not found.");
-    console.log("removeUserCustomerId Before", user.customerId);
-    user.customerId = "none";
-    console.log("removeUserCustomerId After ", user.customerId);
-    return await this.userRepository.updateUserById(user._id, user);
-  }
-
   async deleteProfilePicById(uid: string) {
     const user = await this.userRepository.getUserById(uid);
 

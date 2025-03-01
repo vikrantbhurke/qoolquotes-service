@@ -16,14 +16,27 @@ export class StripeController {
             quantity: 1,
           },
         ],
-        success_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true`,
+        success_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=true&subscription=stripe&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.CLIENT_URL}/users/${request.body.userId}?subscribed=false`,
       });
 
       return response.status(200).json({ approve_url: session.url });
-      // return response.redirect(303, session.url);
     } catch (err: any) {
       return response.status(500).json({ message: err.message });
+    }
+  }
+
+  async getStripeSubscriptionId(request: Request, response: Response) {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(
+        request.body.sessionId
+      );
+
+      return response
+        .status(200)
+        .json({ subscriptionId: session.subscription });
+    } catch (error: any) {
+      return response.status(500).json({ message: error.message });
     }
   }
 
@@ -92,6 +105,11 @@ const stripeControllerRouter = express.Router();
 stripeControllerRouter.post(
   "/create-subscription",
   stripeController.createStripeSubscription.bind(stripeController)
+);
+
+stripeControllerRouter.post(
+  "/get-subscription-id",
+  stripeController.getStripeSubscriptionId.bind(stripeController)
 );
 
 stripeControllerRouter.post(
